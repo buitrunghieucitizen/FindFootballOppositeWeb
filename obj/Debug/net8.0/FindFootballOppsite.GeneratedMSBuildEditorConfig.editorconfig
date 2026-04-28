@@ -24,8 +24,28 @@ build_property.EnableCodeStyleSeverity =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[D:/FInd_Op_Web_Project/FindFootballOppsite/FindFootballOppsite/Views/Home/Matches.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxNYXRjaGVzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/FInd_Op_Web_Project/FindFootballOppsite/FindFootballOppsite/Views/Home/Operations.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxPcGVyYXRpb25zLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/FInd_Op_Web_Project/FindFootballOppsite/FindFootballOppsite/Views/Home/Privacy.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/FInd_Op_Web_Project/FindFootballOppsite/FindFootballOppsite/Views/Home/Recruitment.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxSZWNydWl0bWVudC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/FInd_Op_Web_Project/FindFootballOppsite/FindFootballOppsite/Views/Home/Stadiums.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxTdGFkaXVtcy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/FInd_Op_Web_Project/FindFootballOppsite/FindFootballOppsite/Views/Home/Teams.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxUZWFtcy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/FInd_Op_Web_Project/FindFootballOppsite/FindFootballOppsite/Views/Shared/Error.cshtml]

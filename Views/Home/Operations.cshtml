@@ -1,0 +1,37 @@
+@model PortalHubViewModel
+@{
+    ViewData["Title"] = "Vận hành";
+}
+
+<section class="section-top ffo-page-banner">
+    <div class="container">
+        <div class="col-lg-10 offset-lg-1 col-xs-12 text-center">
+            <div class="section-top-title wow fadeInRight" data-wow-duration="1s" data-wow-delay="0.3s" data-wow-offset="0">
+                <h1>Chức năng theo vai trò</h1>
+                <p>Khách, Cầu thủ, Đội trưởng, Chủ sân và Quản trị viên được gom về một ma trận vai trò để dễ phát triển tiếp.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section-padding">
+    <div class="container">
+        <div class="row">
+            @foreach (var actor in Model.ActorCapabilities)
+            {
+                <div class="col-lg-4 col-sm-6 col-xs-12">
+                    <div class="ffo-role-card">
+                        <span class="ffo-status">@actor.ActorName</span>
+                        <h3>@actor.Summary</h3>
+                        <ul class="ffo-actor-list">
+                            @foreach (var capability in actor.Capabilities)
+                            {
+                                <li>@capability</li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</section>

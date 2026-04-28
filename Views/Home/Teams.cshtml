@@ -1,0 +1,68 @@
+@model PortalHubViewModel
+@{
+    ViewData["Title"] = "Đội bóng";
+}
+
+<section class="section-top ffo-page-banner">
+    <div class="container">
+        <div class="col-lg-10 offset-lg-1 col-xs-12 text-center">
+            <div class="section-top-title wow fadeInRight" data-wow-duration="1s" data-wow-delay="0.3s" data-wow-offset="0">
+                <h1>Quản lý đội bóng & cầu thủ tự do</h1>
+                <p>Đội trưởng duyệt thành viên, cầu thủ tìm đội, và hệ thống gom danh sách cầu thủ đang rảnh.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="our_team section-padding">
+    <div class="container">
+        <div class="section-title text-center wow zoomIn">
+            <h2>Danh sách đội bóng</h2>
+            <div></div>
+        </div>
+        <div class="row text-center">
+            @foreach (var team in Model.Teams)
+            {
+                <div class="col-lg-4 col-sm-6 col-xs-12">
+                    <div class="single_team ffo-single-team">
+                        <img src="~/assets/img/team/team-@((team.TeamId % 4) + 1).jpg" class="img-fluid" alt="@team.TeamName" />
+                        <h3>@team.TeamName</h3>
+                        <p>@team.CaptainName — @team.QualityLevel</p>
+                        <ul class="ffo-mini-list text-left mt-3">
+                            <li>@team.History</li>
+                            <li>Khu vực: @team.HomeArea</li>
+                            <li>@team.RecentForm</li>
+                            <li>Thành viên: @string.Join(", ", team.Members)</li>
+                        </ul>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</section>
+
+<section class="section-padding">
+    <div class="container">
+        <div class="section-title text-center wow zoomIn">
+            <h2>Cầu thủ tự do đang rảnh</h2>
+            <div></div>
+        </div>
+        <div class="row">
+            @foreach (var player in Model.Players.Where(player => player.IsFreeAgent))
+            {
+                <div class="col-lg-4 col-sm-6 col-xs-12">
+                    <div class="ffo-info-card">
+                        <span class="ffo-status ffo-status-alt">Cầu thủ tự do</span>
+                        <h3>@player.FullName</h3>
+                        <ul class="ffo-mini-list">
+                            <li>Vị trí: @player.PreferredPosition</li>
+                            <li>Khu vực: @player.ActiveArea</li>
+                            <li>@player.AvailabilityNote</li>
+                            <li>Vai trò: @string.Join(", ", player.Roles)</li>
+                        </ul>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</section>

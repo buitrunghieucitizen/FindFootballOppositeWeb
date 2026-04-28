@@ -1,48 +1,168 @@
-﻿<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="vi">
 <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - FindFootballOppsite</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="FindFootball - Nền tảng đặt sân, ghép đội và tuyển quân bóng đá" />
+    <title>@ViewData["Title"] - FindFootball</title>
+    <link rel="stylesheet" href="~/assets/bootstrap/css/bootstrap.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="~/assets/fonts/font-awesome.min.css" />
+    <link rel="stylesheet" href="~/assets/fonts/themify-icons.css" />
+    <link rel="stylesheet" href="~/assets/owlcarousel/css/owl.carousel.css" />
+    <link rel="stylesheet" href="~/assets/owlcarousel/css/owl.theme.css" />
+    <link rel="stylesheet" href="~/assets/css/fonts.css" />
+    <link rel="stylesheet" href="~/assets/css/prettyPhoto.css" />
+    <link rel="stylesheet" href="~/assets/css/magnific-popup.css" />
+    <link rel="stylesheet" href="~/assets/css/animate.css" />
+    <link rel="stylesheet" href="~/assets/css/slick.css" />
+    <link rel="stylesheet" href="~/assets/css/menu.css" />
+    <link rel="stylesheet" href="~/assets/css/style.css" />
+    <link rel="stylesheet" href="~/assets/css/responsive.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/FindFootballOppsite.styles.css" asp-append-version="true" />
 </head>
-<body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">FindFootballOppsite</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-    </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
+<body data-spy="scroll" data-offset="80">
+    <div class="preloader">
+        <div class="status">
+            <div class="status-mes"></div>
+        </div>
     </div>
 
-    <footer class="border-top footer text-muted">
+    <div class="site-mobile-menu site-navbar-target">
+        <div class="site-mobile-menu-header">
+            <div class="site-mobile-menu-close mt-3">
+                <span class="icon-close2 js-menu-toggle"></span>
+            </div>
+        </div>
+        <div class="site-mobile-menu-body"></div>
+    </div>
+
+    <header class="site-navbar js-sticky-header site-navbar-target" role="banner">
         <div class="container">
-            &copy; 2026 - FindFootballOppsite - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            <div class="row align-items-center">
+                <div class="col-6 col-xl-2">
+                    <h1 class="mb-0 site-logo">
+                        <a asp-controller="Home" asp-action="Index">
+                            <img src="~/assets/img/logo.png" alt="FindFootball" />
+                        </a>
+                    </h1>
+                </div>
+                <div class="col-12 col-md-10 d-none d-xl-block">
+                    <nav class="site-navigation position-relative text-right" role="navigation">
+                        <ul class="site-menu main-menu js-clone-nav mr-auto d-none d-lg-block">
+                            <li><a asp-controller="Home" asp-action="Index" class="nav-link">Trang chủ</a></li>
+                            <li><a asp-controller="Home" asp-action="Teams" class="nav-link">Đội bóng</a></li>
+                            <li><a asp-controller="Home" asp-action="Stadiums" class="nav-link">Sân bóng</a></li>
+                            <li><a asp-controller="Home" asp-action="Matches" class="nav-link">Trận đấu</a></li>
+                            <li><a asp-controller="Home" asp-action="Recruitment" class="nav-link">Tuyển quân</a></li>
+                            <li><a asp-controller="Home" asp-action="Operations" class="nav-link">Vận hành</a></li>
+                            <li class="has-children">
+                                <a href="#" class="nav-link">Tài khoản</a>
+                                <ul class="dropdown">
+                                    <li><a href="/login.html" class="nav-link">Đăng nhập</a></li>
+                                    <li><a href="/register.html" class="nav-link">Đăng ký</a></li>
+                                    <li><a asp-controller="Home" asp-action="Privacy" class="nav-link">Cơ sở dữ liệu</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+                <div class="col-6 d-inline-block d-xl-none ml-md-0 py-3" style="position: relative; top: 3px;">
+                    <a href="#" class="site-menu-toggle js-menu-toggle float-right"><span class="icon-menu h3"></span></a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    @RenderBody()
+
+    <footer class="footer-area">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <div class="footer_social">
+                        <ul>
+                            <li><a data-toggle="tooltip" data-placement="top" title="Facebook" href="#"><i class="fa fa-facebook"></i></a></li>
+                            <li><a data-toggle="tooltip" data-placement="top" title="Instagram" href="#"><i class="fa fa-instagram"></i></a></li>
+                            <li><a data-toggle="tooltip" data-placement="top" title="Youtube" href="#"><i class="fa fa-youtube"></i></a></li>
+                            <li><a data-toggle="tooltip" data-placement="top" title="Zalo" href="#"><i class="fa fa-comments"></i></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="row footer-padding">
+                <div class="col-md-3 col-sm-6 col-xs-12">
+                    <div class="single_footer">
+                        <h4>FindFootball</h4>
+                        <div class="footer_contact">
+                            <ul>
+                                <li><i class="fa fa-futbol-o"></i> <span>Đặt sân và ghép đội trên cùng một nền tảng</span></li>
+                                <li><i class="fa fa-phone"></i> <span>Hotline: 0900 000 000</span></li>
+                                <li><i class="fa fa-envelope"></i> <span>support@findfootball.vn</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6 col-xs-12">
+                    <div class="single_footer">
+                        <h4>Cầu thủ</h4>
+                        <div class="footer_contact">
+                            <ul>
+                                <li><a asp-controller="Home" asp-action="Teams">Tìm đội bóng</a></li>
+                                <li><a asp-controller="Home" asp-action="Recruitment">Tìm kèo đá bù</a></li>
+                                <li><a href="/register.html">Đăng ký tài khoản</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6 col-xs-12">
+                    <div class="single_footer">
+                        <h4>Đội trưởng</h4>
+                        <div class="footer_contact">
+                            <ul>
+                                <li><a asp-controller="Home" asp-action="Matches">Gà đối</a></li>
+                                <li><a asp-controller="Home" asp-action="Stadiums">Đặt sân</a></li>
+                                <li><a asp-controller="Home" asp-action="Recruitment">Tuyển quân</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6 col-xs-12">
+                    <div class="single_footer">
+                        <h4>Quản trị</h4>
+                        <div class="footer_contact">
+                            <ul>
+                                <li><a asp-controller="Home" asp-action="Operations">Ma trận vai trò</a></li>
+                                <li><a asp-controller="Home" asp-action="Privacy">Hướng dẫn cài đặt CSDL</a></li>
+                                <li><a asp-controller="Home" asp-action="Stadiums">Vận hành cụm sân</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row text-center">
+                <div class="col-md-12 col-sm-12 col-xs-12 wow zoomIn">
+                    <p class="footer_copyright">FindFootball &copy; 2026 — Nền tảng quản lý bóng đá phủi.</p>
+                </div>
+            </div>
         </div>
     </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script src="~/assets/js/jquery-1.12.4.min.js"></script>
+    <script src="~/assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="~/assets/js/modernizr-2.8.3.min.js"></script>
+    <script src="~/assets/js/jquery.stellar.min.js"></script>
+    <script src="~/assets/js/menu.js"></script>
+    <script src="~/assets/js/jquery.sticky.js"></script>
+    <script src="~/assets/owlcarousel/js/owl.carousel.min.js"></script>
+    <script src="~/assets/js/jquery.magnific-popup.min.js"></script>
+    <script src="~/assets/js/slick.min.js"></script>
+    <script src="~/assets/js/jquery.mixitup.js"></script>
+    <script src="~/assets/js/jquery.prettyPhoto.js"></script>
+    <script src="~/assets/js/scrolltopcontrol.js"></script>
+    <script src="~/assets/js/wow.min.js"></script>
+    <script src="~/assets/js/scripts.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>

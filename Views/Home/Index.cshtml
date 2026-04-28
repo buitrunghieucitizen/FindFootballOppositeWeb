@@ -1,8 +1,180 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+@model PortalHubViewModel
+@{
+    ViewData["Title"] = "Trang chủ";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="ffo-page">
+    <section id="home" class="home_bg ffo-home-hero" style="background-image: url(/assets/img/bg/home-bg.jpg); background-size: cover; background-position: center center;">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-10 offset-lg-1 col-sm-12 col-xs-12 text-center">
+                    <div class="hero-text">
+                        <h2>Đặt sân, gà đối, tuyển quân trên cùng một nền tảng</h2>
+                        <p>
+                            Nền tảng giúp cầu thủ tìm đội, đội trưởng đặt sân và gà đối,
+                            chủ sân duyệt lịch, quản trị viên giám sát vận hành — tất cả trong một.
+                        </p>
+                        <div class="home_btn">
+                            <a asp-controller="Home" asp-action="Matches" class="app-btn wow bounceIn page-scroll home_btn_color_one" data-wow-delay=".6s">Gà đối ngay</a>
+                            <a asp-controller="Home" asp-action="Stadiums" class="app-btn wow bounceIn page-scroll home_btn_color_two" data-wow-delay=".8s">Xem lịch sân</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="search_bar section-padding">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-lg-3 col-sm-6 col-xs-12">
+                    <div class="ffo-quick-card">
+                        <h3>@Model.Metrics.TeamCount</h3>
+                        <p>Đội đang hoạt động</p>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-sm-6 col-xs-12">
+                    <div class="ffo-quick-card">
+                        <h3>@Model.Metrics.PitchCount</h3>
+                        <p>Sân đang khai thác</p>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-sm-6 col-xs-12">
+                    <div class="ffo-quick-card">
+                        <h3>@Model.Metrics.UpcomingMatchCount</h3>
+                        <p>Kèo sắp diễn ra</p>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-sm-6 col-xs-12">
+                    <div class="ffo-quick-card">
+                        <h3>@Model.Metrics.FreeAgentCount</h3>
+                        <p>Cầu thủ tự do</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <section class="template_property">
+        <div class="container">
+            <div class="section-title text-center wow zoomIn">
+                <h2>Sân bóng & lịch đặt</h2>
+                <div></div>
+            </div>
+            <div class="row">
+                @foreach (var stadium in Model.Stadiums)
+                {
+                    @foreach (var pitch in stadium.Pitches)
+                    {
+                        <div class="col-lg-4 col-sm-12 col-xs-12">
+                            <div class="single_property ffo-single-property">
+                                <img src="~/assets/img/property/@((pitch.PitchId % 6) + 1).jpg" class="img-fluid" alt="@pitch.PitchName" />
+                                <div class="single_property_description text-center">
+                                    <span><i class="fa fa-futbol-o"></i> Sân @pitch.PitchSize người</span>
+                                    <span><i class="fa fa-map-marker"></i> @stadium.StadiumName</span>
+                                    <span><i class="fa fa-clock-o"></i> @pitch.AvailabilityLabel</span>
+                                </div>
+                                <div class="single_property_content">
+                                    <h4><a asp-controller="Home" asp-action="Stadiums">@pitch.PitchName</a></h4>
+                                    <p>@stadium.Address</p>
+                                    <ul class="ffo-mini-list">
+                                        <li>Chủ sân: @stadium.OwnerName</li>
+                                        <li>@stadium.UtilizationLabel</li>
+                                    </ul>
+                                </div>
+                                <div class="single_property_price">
+                                    Giá theo giờ <span>@pitch.PricePerHour.ToString("N0") VNĐ</span>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                }
+            </div>
+        </div>
+    </section>
+
+    <section id="team" class="our_team section-padding">
+        <div class="container">
+            <div class="section-title text-center wow zoomIn">
+                <h2>Đội bóng & cầu thủ tự do</h2>
+                <div></div>
+            </div>
+            <div class="row text-center">
+                @foreach (var team in Model.Teams)
+                {
+                    <div class="col-lg-4 col-sm-6 col-xs-12">
+                        <div class="single_team ffo-single-team">
+                            <img src="~/assets/img/team/team-@((team.TeamId % 4) + 1).jpg" class="img-fluid" alt="@team.TeamName" />
+                            <h3>@team.TeamName</h3>
+                            <p>@team.CaptainName — @team.QualityLevel</p>
+                            <ul class="list-inline">
+                                <li>@team.HomeArea</li>
+                                <li>@team.RecentForm</li>
+                            </ul>
+                        </div>
+                    </div>
+                }
+                @foreach (var player in Model.Players.Where(player => player.IsFreeAgent))
+                {
+                    <div class="col-lg-4 col-sm-6 col-xs-12">
+                        <div class="single_team ffo-single-team">
+                            <img src="~/assets/img/team/@((player.UserId % 4) + 1).png" class="img-fluid" alt="@player.FullName" />
+                            <h3>@player.FullName</h3>
+                            <p>@player.PreferredPosition — Đang rảnh</p>
+                            <ul class="list-inline">
+                                <li>@player.ActiveArea</li>
+                                <li>@player.AvailabilityNote</li>
+                            </ul>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </section>
+
+    <section class="blog_area section-padding">
+        <div class="container">
+            <div class="section-title text-center wow zoomIn">
+                <h2>Tin tuyển quân & vai trò hệ thống</h2>
+                <div></div>
+            </div>
+            <div class="row">
+                @foreach (var ad in Model.RecruitmentAds)
+                {
+                    <div class="col-lg-4 col-sm-6 col-xs-12">
+                        <div class="single_blog wow fadeInUp">
+                            <img src="~/assets/img/blog/blog-@((ad.AdId % 3) + 1).jpg" class="img-fluid" alt="@ad.Title" />
+                            <div class="blog_content">
+                                <h3><a asp-controller="Home" asp-action="Recruitment">@ad.Title</a></h3>
+                                <p>@ad.Content</p>
+                                <ul class="ffo-mini-list">
+                                    <li>@ad.TeamName</li>
+                                    <li>@ad.PositionNeeded</li>
+                                    <li>@ad.UrgencyLabel</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+
+            <div class="row mt-5">
+                @foreach (var actor in Model.ActorCapabilities)
+                {
+                    <div class="col-lg-4 col-sm-6 col-xs-12">
+                        <div class="ffo-role-card">
+                            <span class="ffo-status">@actor.ActorName</span>
+                            <h3>@actor.Summary</h3>
+                            <ul class="ffo-actor-list">
+                                @foreach (var capability in actor.Capabilities)
+                                {
+                                    <li>@capability</li>
+                                }
+                            </ul>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </section>
 </div>
