@@ -1,43 +1,60 @@
+using FindFootballOppsite.Data;
 using FindFootballOppsite.Services;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.SqlServer; // <-- Add this using directive
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+// Add DbContext
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+// Add Authentication
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(options =>
+    {
+        options.LoginPath = "/Account/Login";
+        options.LogoutPath = "/Account/Logout";
+        options.AccessDeniedPath = "/Account/Login";
+        options.ExpireTimeSpan = TimeSpan.FromDays(7);
+    });
+
+// Add Authorization
+builder.Services.AddAuthorization();
+
+// Add Services
+builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
+builder.Services.AddScoped<PortalDataService>();
+
 builder.Services.AddControllersWithViews();
-builder.Services.AddSingleton<PortalDataService>();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    var context = services.GetRequiredService<ApplicationDbContext>();
+    // Make sure the database is created
+    context.Database.EnsureCreated();
+    // Seed initial users for testing
+    DbSeeder.Seed(context);
+}
+
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
-    app.UseHttpsRedirection();
 }
+
+app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
 
+// Use Authentication & Authorization
+app.UseAuthentication();
 app.UseAuthorization();
-
-app.MapPost("/contact-submit", async context =>
-{
-    var isAjaxRequest = string.Equals(
-        context.Request.Headers["X-Requested-With"],
-        "XMLHttpRequest",
-        StringComparison.OrdinalIgnoreCase);
-
-    if (isAjaxRequest)
-    {
-        context.Response.ContentType = "text/plain";
-        await context.Response.WriteAsync("OK");
-        return;
-    }
-
-    context.Response.Redirect("/thank-you.html");
-});
 
 app.MapControllerRoute(
     name: "default",

@@ -1,0 +1,139 @@
+@model PortalHubViewModel
+@{
+    ViewData["Title"] = "Trang Quản Trị Viên";
+    Layout = "_AdminLayout";
+}
+
+<div class="page-header">
+  <div class="page-block">
+    <div class="row align-items-center">
+      <div class="col-md-12">
+        <ul class="breadcrumb">
+          <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
+          <li class="breadcrumb-item" aria-current="page">Admin</li>
+        </ul>
+      </div>
+      <div class="col-md-12">
+        <div class="page-header-title">
+          <h2 class="mb-0">Dashboard Quản Trị Viên</h2>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row mt-4">
+  <div class="col-md-6 col-xl-3">
+    <div class="card">
+      <div class="card-body">
+        <h6 class="mb-2 f-w-400 text-muted">Tổng Người Dùng</h6>
+        <h4 class="mb-3">@Model.Metrics.PlayerCount</h4>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6 col-xl-3">
+    <div class="card">
+      <div class="card-body">
+        <h6 class="mb-2 f-w-400 text-muted">Tổng Đội Bóng</h6>
+        <h4 class="mb-3">@Model.Metrics.TeamCount</h4>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6 col-xl-3">
+    <div class="card">
+      <div class="card-body">
+        <h6 class="mb-2 f-w-400 text-muted">Cụm Sân</h6>
+        <h4 class="mb-3">@Model.Metrics.StadiumCount</h4>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6 col-xl-3">
+    <div class="card">
+      <div class="card-body">
+        <h6 class="mb-2 f-w-400 text-muted">Tin Tuyển Quân</h6>
+        <h4 class="mb-3">@Model.Metrics.ActiveRecruitmentCount</h4>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-6 col-xl-6 mb-4">
+    <div class="card h-100">
+      <div class="card-header">
+        <h5>Tài khoản & Phân quyền</h5>
+      </div>
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>Họ tên</th>
+                <th>Username</th>
+                <th>Vai trò</th>
+              </tr>
+            </thead>
+            <tbody>
+              @foreach (var player in Model.Players)
+              {
+                <tr>
+                  <td>@player.FullName</td>
+                  <td>@player.Username</td>
+                  <td><span class="badge bg-primary">@string.Join(", ", player.Roles)</span></td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-6 col-xl-6 mb-4">
+    <div class="card h-100">
+      <div class="card-header">
+        <h5>Giám sát Đội bóng & Sân bóng</h5>
+      </div>
+      <div class="card-body">
+        <ul>
+          @foreach (var team in Model.Teams)
+          {
+            <li>Đội bóng: <strong>@team.TeamName</strong> (Đội trưởng: @team.CaptainName)</li>
+          }
+          @foreach (var stadium in Model.Stadiums)
+          {
+            <li>Cụm sân: <strong>@stadium.StadiumName</strong> (Chủ sân: @stadium.OwnerName)</li>
+          }
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-12 mb-4">
+    <div class="card border-danger">
+      <div class="card-header text-danger">
+        <h5>Theo dõi thông báo & Nội dung vi phạm</h5>
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-6">
+            <h6>Thông báo hệ thống</h6>
+            <ul>
+              @foreach (var notif in Model.Notifications)
+              {
+                <li>[Gửi tới: @notif.RecipientName] <strong>@notif.Title</strong> - @notif.Message</li>
+              }
+            </ul>
+          </div>
+          <div class="col-md-6">
+            <h6>Bài tuyển quân (Kiểm duyệt)</h6>
+            <ul>
+              @foreach (var ad in Model.RecruitmentAds)
+              {
+                <li>[Tuyển quân] <strong>@ad.TeamName</strong>: @ad.Title <span class="badge bg-warning">@ad.UrgencyLabel</span></li>
+              }
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

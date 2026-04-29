@@ -3,19 +3,33 @@
     ViewData["Title"] = "Trang chủ";
 }
 
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success" role="alert">
+        @TempData["Success"]
+    </div>
+}
+
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger" role="alert">
+        @TempData["Error"]
+    </div>
+}
+
 <div class="ffo-page">
     <section id="home" class="home_bg ffo-home-hero" style="background-image: url(/assets/img/bg/home-bg.jpg); background-size: cover; background-position: center center;">
         <div class="container">
             <div class="row">
                 <div class="col-lg-10 offset-lg-1 col-sm-12 col-xs-12 text-center">
                     <div class="hero-text">
-                        <h2>Đặt sân, gà đối, tuyển quân trên cùng một nền tảng</h2>
+                        <h2>Đặt sân, gạ đối, tuyển quân trên cùng một nền tảng</h2>
                         <p>
-                            Nền tảng giúp cầu thủ tìm đội, đội trưởng đặt sân và gà đối,
+                            Nền tảng giúp cầu thủ tìm đội, đội trưởng đặt sân và gạ đối,
                             chủ sân duyệt lịch, quản trị viên giám sát vận hành — tất cả trong một.
                         </p>
                         <div class="home_btn">
-                            <a asp-controller="Home" asp-action="Matches" class="app-btn wow bounceIn page-scroll home_btn_color_one" data-wow-delay=".6s">Gà đối ngay</a>
+                            <a asp-controller="Home" asp-action="Matches" class="app-btn wow bounceIn page-scroll home_btn_color_one" data-wow-delay=".6s">Gạ đối ngay</a>
                             <a asp-controller="Home" asp-action="Stadiums" class="app-btn wow bounceIn page-scroll home_btn_color_two" data-wow-delay=".8s">Xem lịch sân</a>
                         </div>
                     </div>

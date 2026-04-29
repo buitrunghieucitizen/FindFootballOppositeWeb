@@ -1,0 +1,114 @@
+@model PortalHubViewModel
+@{
+    ViewData["Title"] = "Trang Đội Trưởng";
+    Layout = "_AdminLayout";
+}
+
+<div class="page-header">
+  <div class="page-block">
+    <div class="row align-items-center">
+      <div class="col-md-12">
+        <ul class="breadcrumb">
+          <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
+          <li class="breadcrumb-item" aria-current="page">Captain</li>
+        </ul>
+      </div>
+      <div class="col-md-12">
+        <div class="page-header-title">
+          <h2 class="mb-0">Dashboard Đội Trưởng</h2>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row mt-4">
+  <div class="col-md-6 mb-4">
+    <div class="card h-100">
+      <div class="card-header">
+        <h5>Quản lý Đội bóng của bạn</h5>
+      </div>
+      <div class="card-body">
+        @foreach (var team in Model.Teams.Where(t => t.CaptainName != null))
+        {
+          <div class="p-3 mb-3 bg-light rounded">
+            <h4 class="text-success">@team.TeamName</h4>
+            <p class="mb-1"><strong>Khu vực:</strong> @team.HomeArea &nbsp;|&nbsp; <strong>Trình độ:</strong> @team.QualityLevel</p>
+            <p class="mb-1"><strong>Thành viên:</strong> @string.Join(", ", team.Members)</p>
+            <p class="mb-0"><strong>Phong độ:</strong> @team.RecentForm</p>
+          </div>
+        }
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-6 mb-4">
+    <div class="card h-100">
+      <div class="card-header">
+        <h5>Tuyển quân & Đá bù</h5>
+      </div>
+      <div class="card-body">
+        <ul class="list-group list-group-flush">
+          @foreach (var ad in Model.RecruitmentAds)
+          {
+            <li class="list-group-item">
+              <strong class="text-warning">@ad.Title (@ad.PositionNeeded)</strong> cho đội @ad.TeamName<br/>
+              <em>@ad.Content</em> <br/> <span class="badge bg-danger mt-1">@ad.UrgencyLabel</span>
+            </li>
+          }
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-6 mb-4">
+    <div class="card h-100">
+      <div class="card-header">
+        <h5>Quản lý Kèo đấu (Gà đối)</h5>
+      </div>
+      <div class="card-body">
+        <ul class="list-group list-group-flush">
+          @foreach (var match in Model.Matches)
+          {
+            <li class="list-group-item">
+              <strong style="font-size: 1.1em;">@match.HomeTeamName vs @match.AwayTeamName</strong><br/>
+              <span class="text-muted">@match.KickoffLabel</span> - <strong class="text-primary">@match.MatchStatus</strong><br/>
+              <em>@match.VenueLabel</em><br/>
+              <strong class="text-success"><i class="ti ti-users"></i> Điểm danh:</strong> @match.AttendanceSummary
+            </li>
+          }
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-6 mb-4">
+    <div class="card h-100">
+      <div class="card-header">
+        <h5>Quản lý Lịch sân</h5>
+      </div>
+      <div class="card-body">
+        <h6 class="border-bottom pb-2">Sắp tới (Đặt lẻ)</h6>
+        <ul class="list-group list-group-flush mb-3">
+          @foreach (var schedule in Model.UpcomingSchedules.Where(s => s.BookedByName.Contains("FC")))
+          {
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              <span><strong>@schedule.PitchName</strong> — @schedule.WindowLabel</span>
+              <span class="badge bg-info">@schedule.Status</span>
+            </li>
+          }
+        </ul>
+        <h6 class="border-bottom pb-2">Cố định hàng tuần</h6>
+        <ul class="list-group list-group-flush">
+          @foreach (var booking in Model.RecurringBookings)
+          {
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              <span><strong>@booking.PitchName</strong> — @booking.WeeklySlot</span>
+              <span class="badge bg-success">@(booking.IsApproved ? "Đã duyệt" : "Chờ duyệt")</span>
+            </li>
+          }
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

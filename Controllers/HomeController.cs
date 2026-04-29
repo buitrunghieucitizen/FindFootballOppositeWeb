@@ -18,37 +18,52 @@ namespace FindFootballOppsite.Controllers
 
         public IActionResult Index()
         {
-            return View(_portalData.BuildPortal());
+            return View("Guest/Index", _portalData.BuildPortal());
         }
 
         public IActionResult Teams()
         {
-            return View(_portalData.BuildPortal());
+            return View("Guest/Teams", _portalData.BuildPortal());
         }
 
         public IActionResult Stadiums()
         {
-            return View(_portalData.BuildPortal());
+            return View("Guest/Stadiums", _portalData.BuildPortal());
         }
 
         public IActionResult Matches()
         {
-            return View(_portalData.BuildPortal());
+            return View("Guest/Matches", _portalData.BuildPortal());
         }
 
         public IActionResult Recruitment()
         {
-            return View(_portalData.BuildPortal());
+            return View("Guest/Recruitment", _portalData.BuildPortal());
         }
 
         public IActionResult Operations()
         {
-            return View(_portalData.BuildPortal());
+            return View("Guest/Operations", _portalData.BuildPortal());
+        }
+
+        public IActionResult Admin()
+        {
+            return View("Admin/Admin", _portalData.BuildPortal());
+        }
+
+        public IActionResult StadiumOwner()
+        {
+            return View("StadiumOwner/StadiumOwner", _portalData.BuildPortal());
+        }
+
+        public IActionResult Captain()
+        {
+            return View("Captain/Captain", _portalData.BuildPortal());
         }
 
         public IActionResult Privacy()
         {
-            return View();
+            return View("Guest/Privacy");
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

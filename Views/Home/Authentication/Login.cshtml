@@ -1,0 +1,60 @@
+@{
+    ViewData["Title"] = "Đăng nhập";
+}
+
+<section class="section-top ffo-page-banner">
+    <div class="container">
+        <div class="col-lg-10 offset-lg-1 col-xs-12 text-center">
+            <div class="section-top-title wow fadeInRight" data-wow-duration="1s" data-wow-delay="0.3s" data-wow-offset="0">
+                <h1>Đăng nhập</h1>
+                <p>Đăng nhập để quản lý đội bóng, đặt sân và tham gia các trận đấu.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="ffo-auth-section">
+    <div class="ffo-auth-card">
+        <h2>Chào mừng trở lại!</h2>
+        <p class="ffo-auth-subtitle">Nhập thông tin tài khoản để đăng nhập</p>
+
+        @if (ViewData.ModelState.Any(x => x.Value.Errors.Any()))
+        {
+            <div class="alert alert-danger" role="alert" style="text-align: left; margin-bottom: 20px;">
+                @foreach (var modelState in ViewData.ModelState.Values)
+                {
+                    @foreach (var error in modelState.Errors)
+                    {
+                        <p class="mb-0">@error.ErrorMessage</p>
+                    }
+                }
+            </div>
+        }
+
+        <form method="post" asp-action="Login" asp-controller="Account">
+            @Html.AntiForgeryToken()
+            <div class="ffo-form-group">
+                <label for="login-username">Tên đăng nhập</label>
+                <input type="text" id="login-username" name="username" placeholder="Nhập tên đăng nhập" required />
+            </div>
+            <div class="ffo-form-group">
+                <label for="login-password">Mật khẩu</label>
+                <input type="password" id="login-password" name="password" placeholder="Nhập mật khẩu" required />
+            </div>
+            <div class="ffo-form-group">
+                <label for="login-role">Đăng nhập dưới vai trò</label>
+                <select id="login-role" name="userRole" required style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 4px; outline: none; transition: border-color 0.3s ease;">
+                    <option value="" disabled selected>-- Chọn vai trò --</option>
+                    <option value="Admin">Quản trị viên</option>
+                    <option value="StadiumOwner">Chủ sân</option>
+                    <option value="Captain">Đội trưởng</option>
+                    <option value="Player">Cầu thủ</option>
+                </select>
+            </div>
+            <button type="submit" class="ffo-auth-btn">Đăng nhập</button>
+        </form>
+        <div class="ffo-auth-footer-link">
+            Chưa có tài khoản? <a asp-controller="Account" asp-action="Register">Đăng ký ngay</a>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,103 @@
+@model PortalHubViewModel
+@{
+    ViewData["Title"] = "Trang Chủ Sân";
+    Layout = "_AdminLayout";
+}
+
+<div class="page-header">
+  <div class="page-block">
+    <div class="row align-items-center">
+      <div class="col-md-12">
+        <ul class="breadcrumb">
+          <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
+          <li class="breadcrumb-item" aria-current="page">Stadium Owner</li>
+        </ul>
+      </div>
+      <div class="col-md-12">
+        <div class="page-header-title">
+          <h2 class="mb-0">Dashboard Chủ Sân</h2>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row mt-4">
+  <div class="col-12 mb-4">
+    <div class="card">
+      <div class="card-header">
+        <h5>Cơ sở vật chất - Danh sách Sân bóng</h5>
+      </div>
+      <div class="card-body">
+        @foreach (var stadium in Model.Stadiums)
+        {
+          <div class="mb-4">
+            <h4 class="text-primary">@stadium.StadiumName</h4>
+            <p><strong>Địa chỉ:</strong> @stadium.Address | <strong class="text-success">@stadium.UtilizationLabel</strong></p>
+            <div class="table-responsive">
+              <table class="table table-striped table-bordered">
+                <thead class="table-light">
+                  <tr>
+                    <th>Tên sân con</th>
+                    <th>Loại sân</th>
+                    <th>Đơn giá/Giờ</th>
+                    <th>Trạng thái</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  @foreach (var pitch in stadium.Pitches)
+                  {
+                    <tr>
+                      <td><strong>@pitch.PitchName</strong></td>
+                      <td>Sân @pitch.PitchSize người</td>
+                      <td>@pitch.PricePerHour.ToString("N0") VNĐ</td>
+                      <td><span class="badge bg-info">@pitch.AvailabilityLabel</span></td>
+                    </tr>
+                  }
+                </tbody>
+              </table>
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-6 col-xl-6 mb-4">
+    <div class="card h-100">
+      <div class="card-header">
+        <h5>Lịch đặt lẻ</h5>
+      </div>
+      <div class="card-body">
+        <ul class="list-group list-group-flush">
+          @foreach (var schedule in Model.UpcomingSchedules)
+          {
+            <li class="list-group-item">
+              <strong>@schedule.PitchName:</strong> @schedule.WindowLabel <br/>
+              <span class="text-muted">Người đặt: @schedule.BookedByName</span> - <span class="badge bg-warning text-dark">@schedule.Status</span>
+            </li>
+          }
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-6 col-xl-6 mb-4">
+    <div class="card h-100">
+      <div class="card-header bg-light-primary">
+        <h5>Lịch cố định hàng tuần (Hợp đồng dài hạn)</h5>
+      </div>
+      <div class="card-body">
+        <ul class="list-group list-group-flush">
+          @foreach (var booking in Model.RecurringBookings)
+          {
+            <li class="list-group-item">
+              <strong>@booking.PitchName:</strong> @booking.WeeklySlot <br/>
+              <span class="text-muted">Đội: @booking.TeamName (@booking.DateRange)</span> - <span class="badge bg-success">@(booking.IsApproved ? "Đã duyệt" : "Chờ duyệt")</span>
+            </li>
+          }
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

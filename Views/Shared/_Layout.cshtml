@@ -58,12 +58,42 @@
                             <li><a asp-controller="Home" asp-action="Recruitment" class="nav-link">Tuyển quân</a></li>
                             <li><a asp-controller="Home" asp-action="Operations" class="nav-link">Vận hành</a></li>
                             <li class="has-children">
-                                <a href="#" class="nav-link">Tài khoản</a>
-                                <ul class="dropdown">
-                                    <li><a href="/login.html" class="nav-link">Đăng nhập</a></li>
-                                    <li><a href="/register.html" class="nav-link">Đăng ký</a></li>
-                                    <li><a asp-controller="Home" asp-action="Privacy" class="nav-link">Cơ sở dữ liệu</a></li>
-                                </ul>
+                                @if (User.Identity.IsAuthenticated)
+                                {
+                                    <a href="#" class="nav-link">Chào, @User.Identity.Name</a>
+                                    <ul class="dropdown">
+                                        @{
+                                            var role = User.Claims.FirstOrDefault(c => c.Type == System.Security.Claims.ClaimTypes.Role)?.Value;
+                                        }
+                                        @if (role == "Admin")
+                                        {
+                                            <li><a asp-controller="Home" asp-action="Admin" class="nav-link">Dashboard Admin</a></li>
+                                        }
+                                        else if (role == "StadiumOwner")
+                                        {
+                                            <li><a asp-controller="Home" asp-action="StadiumOwner" class="nav-link">Dashboard Chủ Sân</a></li>
+                                        }
+                                        else if (role == "Captain")
+                                        {
+                                            <li><a asp-controller="Home" asp-action="Captain" class="nav-link">Dashboard Đội Trưởng</a></li>
+                                        }
+                                        <li><a asp-controller="Home" asp-action="Privacy" class="nav-link">Cơ sở dữ liệu</a></li>
+                                        <li>
+                                            <form method="post" asp-controller="Account" asp-action="Logout">
+                                                <button type="submit" class="nav-link" style="background:none; border:none; cursor:pointer; width:100%; text-align:left; padding-left:20px;">Đăng xuất</button>
+                                            </form>
+                                        </li>
+                                    </ul>
+                                }
+                                else
+                                {
+                                    <a href="#" class="nav-link">Tài khoản</a>
+                                    <ul class="dropdown">
+                                        <li><a asp-controller="Account" asp-action="Login" class="nav-link">Đăng nhập</a></li>
+                                        <li><a asp-controller="Account" asp-action="Register" class="nav-link">Đăng ký</a></li>
+                                        <li><a asp-controller="Home" asp-action="Privacy" class="nav-link">Cơ sở dữ liệu</a></li>
+                                    </ul>
+                                }
                             </li>
                         </ul>
                     </nav>
@@ -74,6 +104,14 @@
             </div>
         </div>
     </header>
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success" role="alert" style="position: fixed; top: 100px; right: 20px; z-index: 9999; box-shadow: 0 4px 6px rgba(0,0,0,0.1); padding-right: 40px;">
+            @TempData["SuccessMessage"]
+            <button type="button" onclick="this.parentElement.style.display='none';" style="position: absolute; top: 10px; right: 10px; background: none; border: none; font-size: 1.2rem; cursor: pointer; color: #155724;">&times;</button>
+        </div>
+    }
 
     @RenderBody()
 
@@ -111,7 +149,10 @@
                             <ul>
                                 <li><a asp-controller="Home" asp-action="Teams">Tìm đội bóng</a></li>
                                 <li><a asp-controller="Home" asp-action="Recruitment">Tìm kèo đá bù</a></li>
-                                <li><a href="/register.html">Đăng ký tài khoản</a></li>
+                                @if (!User.Identity.IsAuthenticated)
+                                {
+                                    <li><a asp-controller="Account" asp-action="Register">Đăng ký tài khoản</a></li>
+                                }
                             </ul>
                         </div>
                     </div>
