@@ -23,12 +23,14 @@
         <div class="row text-center">
             @foreach (var team in Model.Teams)
             {
-                <div class="col-lg-4 col-sm-6 col-xs-12">
+                <div class="col-lg-4 col-sm-6 col-xs-12 wow fadeInUp">
                     <div class="single_team ffo-single-team">
-                        <img src="~/assets/img/team/team-@((team.TeamId % 4) + 1).jpg" class="img-fluid" alt="@team.TeamName" />
+                        <div style="overflow:hidden;">
+                            <img src="~/assets/img/team/team-@((team.TeamId % 4) + 1).jpg" class="img-fluid" alt="@team.TeamName" />
+                        </div>
                         <h3>@team.TeamName</h3>
                         <p>@team.CaptainName — @team.QualityLevel</p>
-                        <ul class="ffo-mini-list text-left mt-3">
+                        <ul class="ffo-mini-list text-left mt-3" style="padding:0 20px 20px;">
                             <li>@team.History</li>
                             <li>Khu vực: @team.HomeArea</li>
                             <li>@team.RecentForm</li>
@@ -41,7 +43,7 @@
     </div>
 </section>
 
-<section class="section-padding">
+<section class="section-padding" style="background:var(--ffo-bg);">
     <div class="container">
         <div class="section-title text-center wow zoomIn">
             <h2>Cầu thủ tự do đang rảnh</h2>
@@ -50,7 +52,7 @@
         <div class="row">
             @foreach (var player in Model.Players.Where(player => player.IsFreeAgent))
             {
-                <div class="col-lg-4 col-sm-6 col-xs-12">
+                <div class="col-lg-4 col-sm-6 col-xs-12 wow fadeInUp" style="margin-bottom:30px;">
                     <div class="ffo-info-card">
                         <span class="ffo-status ffo-status-alt">Cầu thủ tự do</span>
                         <h3>@player.FullName</h3>

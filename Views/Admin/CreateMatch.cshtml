@@ -1,0 +1,36 @@
+@model FindFootballOppsite.Models.Match
+@{
+    ViewData["Title"] = "Thêm Trận đấu";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="ff-dashboard-hero ff-animate-in" style="background:linear-gradient(135deg,#7c3aed,#2563eb);">
+  <h2><i class="ti ti-calendar-plus"></i> Thêm Trận Đấu Mới</h2>
+  <p>Tạo kèo đấu mới cho các đội bóng.</p>
+</div>
+
+<a href="@Url.Action("Matches", "Admin")" class="ff-btn ff-btn-outline mb-3"><i class="ti ti-arrow-left"></i> Quay lại</a>
+
+<div class="ff-form-card">
+  <div class="ff-card-header"><h5><i class="ti ti-calendar-plus"></i> Thông tin trận đấu</h5></div>
+  <div class="ff-card-body">
+    <form asp-action="CreateMatch" method="post">
+      <div class="ff-form-group"><label asp-for="HomeTeamId">ID Đội nhà</label><input asp-for="HomeTeamId" type="number" placeholder="ID đội nhà" /></div>
+      <div class="ff-form-group"><label asp-for="AwayTeamId">ID Đội khách</label><input asp-for="AwayTeamId" type="number" placeholder="ID đội khách" /></div>
+      <div class="ff-form-group"><label asp-for="ScheduleId">ID Lịch sân</label><input asp-for="ScheduleId" type="number" placeholder="Có thể để trống" /></div>
+      <div class="ff-form-group">
+        <label asp-for="MatchStatus">Trạng thái</label>
+        <select asp-for="MatchStatus">
+          <option value="Proposed">Đề xuất</option>
+          <option value="Accepted">Đã chấp nhận</option>
+          <option value="Completed">Hoàn thành</option>
+          <option value="Cancelled">Đã hủy</option>
+        </select>
+      </div>
+      <div style="display:flex;gap:10px;padding-top:8px;">
+        <button type="submit" class="ff-btn ff-btn-primary ff-btn-lg"><i class="ti ti-check"></i> Lưu trận đấu</button>
+        <a href="@Url.Action("Matches", "Admin")" class="ff-btn ff-btn-outline ff-btn-lg">Hủy</a>
+      </div>
+    </form>
+  </div>
+</div>

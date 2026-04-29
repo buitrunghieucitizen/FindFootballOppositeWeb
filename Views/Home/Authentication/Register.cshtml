@@ -15,17 +15,24 @@
 
 <section class="ffo-auth-section">
     <div class="ffo-auth-card">
+        <div style="text-align:center;margin-bottom:24px;">
+            <div style="width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,#f59e0b,#ef4444);margin:0 auto 16px;display:flex;align-items:center;justify-content:center;">
+                <i class="fa fa-user-plus" style="color:#fff;font-size:26px;"></i>
+            </div>
+        </div>
         <h2>Tạo tài khoản mới</h2>
-        <p class="ffo-auth-subtitle">Điền thông tin bên dưới để đăng ký</p>
+        <p class="ffo-auth-subtitle">Điền thông tin bên dưới để bắt đầu</p>
 
         @if (ViewData.ModelState.Any(x => x.Value.Errors.Any()))
         {
-            <div class="alert alert-danger" role="alert" style="text-align: left; margin-bottom: 20px;">
+            <div style="background:linear-gradient(135deg,#fef2f2,#fff1f2);border:1px solid #fecaca;border-radius:12px;padding:14px 18px;margin-bottom:24px;text-align:left;">
                 @foreach (var modelState in ViewData.ModelState.Values)
                 {
                     @foreach (var error in modelState.Errors)
                     {
-                        <p class="mb-0">@error.ErrorMessage</p>
+                        <p style="margin:0;color:#dc2626;font-size:14px;font-weight:500;">
+                            <i class="fa fa-exclamation-circle" style="margin-right:6px;"></i>@error.ErrorMessage
+                        </p>
                     }
                 }
             </div>
@@ -34,33 +41,35 @@
         <form method="post" asp-action="Register" asp-controller="Account">
             @Html.AntiForgeryToken()
             <div class="ffo-form-group">
-                <label for="register-fullname">Họ và tên</label>
+                <label for="register-fullname"><i class="fa fa-id-card" style="margin-right:6px;color:#0d9488;"></i>Họ và tên</label>
                 <input type="text" id="register-fullname" name="fullName" placeholder="Nhập họ và tên đầy đủ" required />
             </div>
             <div class="ffo-form-group">
-                <label for="register-username">Tên đăng nhập</label>
+                <label for="register-username"><i class="fa fa-user" style="margin-right:6px;color:#0d9488;"></i>Tên đăng nhập</label>
                 <input type="text" id="register-username" name="username" placeholder="Nhập tên đăng nhập" required />
             </div>
             <div class="ffo-form-group">
-                <label for="register-phone">Số điện thoại</label>
+                <label for="register-phone"><i class="fa fa-phone" style="margin-right:6px;color:#0d9488;"></i>Số điện thoại</label>
                 <input type="text" id="register-phone" name="phone" placeholder="Nhập số điện thoại" required />
             </div>
             <div class="ffo-form-group">
-                <label for="register-role">Vai trò</label>
-                <select id="register-role" name="userRole" required style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 4px; outline: none; transition: border-color 0.3s ease;">
+                <label for="register-role"><i class="fa fa-id-badge" style="margin-right:6px;color:#0d9488;"></i>Vai trò</label>
+                <select id="register-role" name="userRole" required>
                     <option value="Player">Cầu thủ</option>
                     <option value="Captain">Đội trưởng</option>
                 </select>
             </div>
             <div class="ffo-form-group">
-                <label for="register-password">Mật khẩu</label>
+                <label for="register-password"><i class="fa fa-lock" style="margin-right:6px;color:#0d9488;"></i>Mật khẩu</label>
                 <input type="password" id="register-password" name="password" placeholder="Nhập mật khẩu" required />
             </div>
             <div class="ffo-form-group">
-                <label for="register-confirmPassword">Xác nhận mật khẩu</label>
+                <label for="register-confirmPassword"><i class="fa fa-check-circle" style="margin-right:6px;color:#0d9488;"></i>Xác nhận mật khẩu</label>
                 <input type="password" id="register-confirmPassword" name="confirmPassword" placeholder="Xác nhận mật khẩu" required />
             </div>
-            <button type="submit" class="ffo-auth-btn">Đăng ký</button>
+            <button type="submit" class="ffo-auth-btn">
+                <i class="fa fa-user-plus" style="margin-right:8px;"></i>Đăng ký
+            </button>
         </form>
         <div class="ffo-auth-footer-link">
             Đã có tài khoản? <a asp-controller="Account" asp-action="Login">Đăng nhập ngay</a>

@@ -1,0 +1,41 @@
+@model FindFootballOppsite.Models.Stadium
+@{
+    ViewData["Title"] = "Thêm Sân bóng";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="ff-dashboard-hero ff-animate-in" style="background:linear-gradient(135deg,#d97706,#dc2626);">
+  <h2><i class="ti ti-map-pin-plus"></i> Thêm Sân Bóng Mới</h2>
+  <p>Đăng ký cụm sân bóng mới vào hệ thống.</p>
+</div>
+
+<a href="@Url.Action("Stadiums", "Admin")" class="ff-btn ff-btn-outline mb-3 ff-animate-in"><i class="ti ti-arrow-left"></i> Quay lại danh sách</a>
+
+<div class="ff-form-card ff-animate-in">
+  <div class="ff-card-header"><h5><i class="ti ti-map-pin-plus"></i> Thông tin sân bóng</h5></div>
+  <div class="ff-card-body">
+    <form asp-action="CreateStadium" method="post">
+      <div class="ff-form-group">
+        <label asp-for="StadiumName">Tên Sân bóng <span style="color:var(--ff-danger);">*</span></label>
+        <input asp-for="StadiumName" placeholder="VD: Cụm Sân Chuyên Việt" required />
+        <span asp-validation-for="StadiumName" style="font-size:0.78rem;color:var(--ff-danger);"></span>
+      </div>
+      <div class="ff-form-group">
+        <label asp-for="OwnerId">ID Chủ sân</label>
+        <input asp-for="OwnerId" type="number" placeholder="ID người dùng làm chủ sân" />
+      </div>
+      <div class="ff-form-group">
+        <label asp-for="Address">Địa chỉ <span style="color:var(--ff-danger);">*</span></label>
+        <input asp-for="Address" placeholder="VD: Cầu Giấy, Hà Nội" required />
+      </div>
+      <div class="ff-form-group">
+        <label asp-for="Description">Mô tả</label>
+        <textarea asp-for="Description" rows="3" placeholder="Thông tin chi tiết về cụm sân..."></textarea>
+      </div>
+      <div style="display:flex;gap:10px;padding-top:8px;">
+        <button type="submit" class="ff-btn ff-btn-warning ff-btn-lg"><i class="ti ti-check"></i> Lưu sân bóng</button>
+        <a href="@Url.Action("Stadiums", "Admin")" class="ff-btn ff-btn-outline ff-btn-lg">Hủy</a>
+      </div>
+    </form>
+  </div>
+</div>

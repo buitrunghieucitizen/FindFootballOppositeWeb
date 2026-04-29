@@ -17,6 +17,7 @@
   <!-- [Template CSS Files] -->
   <link rel="stylesheet" href="~/assets/assets_for_admin_stadiumOwner_Captain/css/style.css" id="main-style-link" >
   <link rel="stylesheet" href="~/assets/assets_for_admin_stadiumOwner_Captain/css/style-preset.css" >
+  <link rel="stylesheet" href="~/assets/css/dashboard.css" />
   
   @RenderSection("Styles", required: false)
 </head>
@@ -54,7 +55,19 @@
           @if (role == "Admin")
           {
               <li class="pc-item">
-                <a href="@Url.Action("Admin", "Home")" class="pc-link"><span class="pc-micon"><i class="ti ti-user"></i></span><span class="pc-mtext">Admin Dashboard</span></a>
+                <a href="@Url.Action("Admin", "Home")" class="pc-link"><span class="pc-micon"><i class="ti ti-dashboard"></i></span><span class="pc-mtext">Dashboard</span></a>
+              </li>
+              <li class="pc-item">
+                <a href="@Url.Action("Users", "Admin")" class="pc-link"><span class="pc-micon"><i class="ti ti-users"></i></span><span class="pc-mtext">Quản lý Người Dùng</span></a>
+              </li>
+              <li class="pc-item">
+                <a href="@Url.Action("Teams", "Admin")" class="pc-link"><span class="pc-micon"><i class="ti ti-shield"></i></span><span class="pc-mtext">Quản lý Đội Bóng</span></a>
+              </li>
+              <li class="pc-item">
+                <a href="@Url.Action("Stadiums", "Admin")" class="pc-link"><span class="pc-micon"><i class="ti ti-map-pin"></i></span><span class="pc-mtext">Quản lý Sân Bóng</span></a>
+              </li>
+              <li class="pc-item">
+                <a href="@Url.Action("Matches", "Admin")" class="pc-link"><span class="pc-micon"><i class="ti ti-calendar-event"></i></span><span class="pc-mtext">Quản lý Trận Đấu</span></a>
               </li>
           }
           else if (role == "StadiumOwner")

@@ -1,0 +1,112 @@
+@model IEnumerable<FindFootballOppsite.Models.Match>
+@{
+    ViewData["Title"] = "Quản lý Trận đấu";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    var currentPage = (int)(ViewBag.CurrentPage ?? 1);
+    var totalPages = (int)(ViewBag.TotalPages ?? 1);
+    var totalItems = (int)(ViewBag.TotalItems ?? 0);
+    var search = ViewBag.Search as string ?? "";
+}
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="ff-toast"><i class="ti ti-circle-check"></i> @TempData["SuccessMessage"]</div>
+}
+
+<div class="ff-dashboard-hero ff-animate-in" style="background:linear-gradient(135deg,#7c3aed,#2563eb);">
+  <h2><i class="ti ti-calendar-event"></i> Quản Lý Trận Đấu</h2>
+  <p>Theo dõi, thêm mới và quản lý các trận đấu trong hệ thống.</p>
+</div>
+
+<div class="ff-toolbar ff-animate-in">
+  <form method="get" asp-action="Matches" class="ff-search-box">
+    <i class="ti ti-search ff-search-icon"></i>
+    <input type="text" name="search" value="@search" placeholder="Tìm theo trạng thái hoặc tên đội..." />
+  </form>
+  <div class="ff-toolbar-actions">
+    <span class="ff-badge ff-badge-purple ff-badge-pill">@totalItems trận đấu</span>
+    <a href="@Url.Action("CreateMatch", "Admin")" class="ff-btn ff-btn-primary"><i class="ti ti-plus"></i> Thêm mới</a>
+  </div>
+</div>
+
+<div class="ff-card ff-animate-in" style="height:auto;">
+  <div class="ff-card-body" style="padding:0;">
+    @if (Model.Any())
+    {
+      <div class="table-responsive">
+        <table class="ff-table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Đội nhà</th>
+              <th style="text-align:center;"></th>
+              <th>Đội khách</th>
+              <th>Trạng thái</th>
+              <th style="text-align:right;">Thao tác</th>
+            </tr>
+          </thead>
+          <tbody>
+            @foreach (var match in Model)
+            {
+              var statusClass = match.MatchStatus switch {
+                "Accepted" => "success",
+                "Proposed" => "warning",
+                "Completed" => "info",
+                "Cancelled" => "danger",
+                "CancelPending" => "danger",
+                _ => "primary"
+              };
+              <tr>
+                <td><span class="ff-badge ff-badge-purple">#@match.MatchId</span></td>
+                <td>
+                  <div style="display:flex;align-items:center;gap:8px;">
+                    <div style="width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#2563eb,#7c3aed);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:0.7rem;flex-shrink:0;">
+                      @(match.HomeTeam != null ? match.HomeTeam.TeamName.Substring(0, 2) : "?")
+                    </div>
+                    <span style="font-weight:600;">@(match.HomeTeam?.TeamName ?? $"ID: {match.HomeTeamId}")</span>
+                  </div>
+                </td>
+                <td style="text-align:center;"><span style="font-weight:800;color:var(--ff-text-muted);font-size:0.78rem;">VS</span></td>
+                <td>
+                  <div style="display:flex;align-items:center;gap:8px;">
+                    <div style="width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#dc2626,#f59e0b);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:0.7rem;flex-shrink:0;">
+                      @(match.AwayTeam != null ? match.AwayTeam.TeamName.Substring(0, 2) : "?")
+                    </div>
+                    <span style="font-weight:600;">@(match.AwayTeam?.TeamName ?? (match.AwayTeamId.HasValue ? $"ID: {match.AwayTeamId}" : "Chờ đối thủ"))</span>
+                  </div>
+                </td>
+                <td><span class="ff-badge ff-badge-@statusClass ff-badge-pill">@(match.MatchStatus ?? "—")</span></td>
+                <td style="text-align:right;">
+                  <div style="display:flex;gap:6px;justify-content:flex-end;">
+                    <a href="@Url.Action("EditMatch", "Admin", new { id = match.MatchId })" class="ff-btn ff-btn-warning ff-btn-sm" title="Sửa"><i class="ti ti-edit"></i></a>
+                    <a href="@Url.Action("DeleteMatch", "Admin", new { id = match.MatchId })" class="ff-btn ff-btn-danger ff-btn-sm" title="Xóa" onclick="return confirm('Bạn có chắc chắn muốn xóa trận đấu này?');"><i class="ti ti-trash"></i></a>
+                  </div>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+
+      @if (totalPages > 1)
+      {
+        <div class="ff-pagination" style="padding:12px 20px;">
+          <div class="ff-pagination-info">Trang @currentPage / @totalPages · @totalItems kết quả</div>
+          <div class="ff-pagination-pages">
+            <a href="@Url.Action("Matches", "Admin", new { search, page = currentPage - 1 })" class="@(currentPage <= 1 ? "disabled" : "")"><i class="ti ti-chevron-left"></i></a>
+            @for (int i = 1; i <= totalPages; i++)
+            {
+              if (i == currentPage) { <span class="active">@i</span> }
+              else { <a href="@Url.Action("Matches", "Admin", new { search, page = i })">@i</a> }
+            }
+            <a href="@Url.Action("Matches", "Admin", new { search, page = currentPage + 1 })" class="@(currentPage >= totalPages ? "disabled" : "")"><i class="ti ti-chevron-right"></i></a>
+          </div>
+        </div>
+      }
+    }
+    else
+    {
+      <div class="ff-empty-state"><i class="ti ti-calendar-off"></i><p>Không tìm thấy trận đấu nào</p></div>
+    }
+  </div>
+</div>

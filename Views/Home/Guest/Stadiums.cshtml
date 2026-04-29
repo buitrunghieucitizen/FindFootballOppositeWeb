@@ -25,9 +25,11 @@
             {
                 @foreach (var pitch in stadium.Pitches)
                 {
-                    <div class="col-lg-4 col-sm-12 col-xs-12">
+                    <div class="col-lg-4 col-sm-12 col-xs-12 wow fadeInUp">
                         <div class="single_property ffo-single-property">
-                            <img src="~/assets/img/property/@((pitch.PitchId % 6) + 1).jpg" class="img-fluid" alt="@pitch.PitchName" />
+                            <div style="overflow:hidden;">
+                                <img src="~/assets/img/property/@((pitch.PitchId % 6) + 1).jpg" class="img-fluid" alt="@pitch.PitchName" />
+                            </div>
                             <div class="single_property_description text-center">
                                 <span><i class="fa fa-map-marker"></i> @stadium.StadiumName</span>
                                 <span><i class="fa fa-futbol-o"></i> Sân @pitch.PitchSize người</span>
@@ -53,10 +55,10 @@
     </div>
 </section>
 
-<section class="section-padding">
+<section class="section-padding" style="background:var(--ffo-bg);">
     <div class="container">
         <div class="row">
-            <div class="col-lg-6 col-sm-12 col-xs-12">
+            <div class="col-lg-6 col-sm-12 col-xs-12 wow fadeInLeft" style="margin-bottom:30px;">
                 <div class="ffo-info-card">
                     <span class="ffo-status">Lịch cố định</span>
                     <h3>Đặt sân hàng tuần</h3>
@@ -68,7 +70,7 @@
                     </ul>
                 </div>
             </div>
-            <div class="col-lg-6 col-sm-12 col-xs-12">
+            <div class="col-lg-6 col-sm-12 col-xs-12 wow fadeInRight" style="margin-bottom:30px;">
                 <div class="ffo-info-card">
                     <span class="ffo-status ffo-status-alt">Lịch sân</span>
                     <h3>Lịch ngắn hạn</h3>

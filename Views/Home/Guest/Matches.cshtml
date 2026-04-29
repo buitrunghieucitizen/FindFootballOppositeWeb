@@ -23,11 +23,11 @@
         <div class="row">
             @foreach (var match in Model.Matches)
             {
-                <div class="col-lg-6 col-sm-12 col-xs-12">
+                <div class="col-lg-6 col-sm-12 col-xs-12 wow fadeInUp">
                     <div class="ffo-match-card">
                         <span class="ffo-status">@match.MatchStatus</span>
                         <h3>@match.HomeTeamName vs @match.AwayTeamName</h3>
-                        <div class="ffo-match-meta">@match.KickoffLabel</div>
+                        <div class="ffo-match-meta"><i class="fa fa-calendar" style="margin-right:6px;"></i>@match.KickoffLabel</div>
                         <ul class="ffo-mini-list">
                             <li>@match.VenueLabel</li>
                             <li>@match.BookingSummary</li>
@@ -41,10 +41,10 @@
     </div>
 </section>
 
-<section class="section-padding">
+<section class="section-padding" style="background:var(--ffo-bg);">
     <div class="container">
         <div class="row">
-            <div class="col-lg-6 col-sm-12 col-xs-12">
+            <div class="col-lg-6 col-sm-12 col-xs-12 wow fadeInLeft" style="margin-bottom:30px;">
                 <div class="ffo-info-card">
                     <span class="ffo-status">Bình chọn trận</span>
                     <h3>Đội trưởng quản lý bình chọn trước trận</h3>
@@ -55,7 +55,7 @@
                     </ul>
                 </div>
             </div>
-            <div class="col-lg-6 col-sm-12 col-xs-12">
+            <div class="col-lg-6 col-sm-12 col-xs-12 wow fadeInRight" style="margin-bottom:30px;">
                 <div class="ffo-info-card">
                     <span class="ffo-status ffo-status-alt">Quy trình hủy kèo</span>
                     <h3>Hủy kèo cần lý do và đối thủ xác nhận</h3>

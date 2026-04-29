@@ -4,110 +4,210 @@
     Layout = "_AdminLayout";
 }
 
-<div class="page-header">
-  <div class="page-block">
-    <div class="row align-items-center">
-      <div class="col-md-12">
-        <ul class="breadcrumb">
-          <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
-          <li class="breadcrumb-item" aria-current="page">Captain</li>
-        </ul>
-      </div>
-      <div class="col-md-12">
-        <div class="page-header-title">
-          <h2 class="mb-0">Dashboard Đội Trưởng</h2>
-        </div>
-      </div>
+<!-- Hero Header -->
+<div class="ff-dashboard-hero ff-animate-in" style="background:linear-gradient(135deg, #059669 0%, #0891b2 100%);">
+  <h2><i class="ti ti-flag-3"></i> Bảng Điều Khiển Đội Trưởng</h2>
+  <p>Quản lý đội hình, gạ đối, tuyển quân và theo dõi lịch thi đấu của đội bạn.</p>
+  <span class="ff-hero-badge"><i class="ti ti-trophy"></i> Mùa giải 2026</span>
+</div>
+
+<!-- Stat Cards -->
+<div class="row g-3 mb-4">
+  <div class="col-md-6 col-xl-3 ff-animate-in">
+    <div class="ff-stat-card">
+      <div class="ff-stat-icon bg-success-soft"><i class="ti ti-shield"></i></div>
+      <div class="ff-stat-value">@Model.Teams.Count</div>
+      <div class="ff-stat-label">Đội Bóng Của Bạn</div>
+    </div>
+  </div>
+  <div class="col-md-6 col-xl-3 ff-animate-in">
+    <div class="ff-stat-card">
+      <div class="ff-stat-icon bg-primary-soft"><i class="ti ti-calendar-event"></i></div>
+      <div class="ff-stat-value">@Model.Matches.Count</div>
+      <div class="ff-stat-label">Kèo Đấu</div>
+    </div>
+  </div>
+  <div class="col-md-6 col-xl-3 ff-animate-in">
+    <div class="ff-stat-card">
+      <div class="ff-stat-icon bg-warning-soft"><i class="ti ti-speakerphone"></i></div>
+      <div class="ff-stat-value">@Model.RecruitmentAds.Count</div>
+      <div class="ff-stat-label">Tin Tuyển Quân</div>
+    </div>
+  </div>
+  <div class="col-md-6 col-xl-3 ff-animate-in">
+    <div class="ff-stat-card">
+      <div class="ff-stat-icon bg-purple-soft"><i class="ti ti-user-search"></i></div>
+      <div class="ff-stat-value">@Model.Metrics.FreeAgentCount</div>
+      <div class="ff-stat-label">Cầu Thủ Tự Do</div>
     </div>
   </div>
 </div>
 
-<div class="row mt-4">
-  <div class="col-md-6 mb-4">
-    <div class="card h-100">
-      <div class="card-header">
-        <h5>Quản lý Đội bóng của bạn</h5>
+<!-- Main Content -->
+<div class="row g-3 mb-4">
+  <!-- Team Management -->
+  <div class="col-xl-6 ff-animate-in">
+    <div class="ff-card">
+      <div class="ff-card-header">
+        <h5><i class="ti ti-shield-check"></i> Đội Bóng Của Bạn</h5>
       </div>
-      <div class="card-body">
+      <div class="ff-card-body">
         @foreach (var team in Model.Teams.Where(t => t.CaptainName != null))
         {
-          <div class="p-3 mb-3 bg-light rounded">
-            <h4 class="text-success">@team.TeamName</h4>
-            <p class="mb-1"><strong>Khu vực:</strong> @team.HomeArea &nbsp;|&nbsp; <strong>Trình độ:</strong> @team.QualityLevel</p>
-            <p class="mb-1"><strong>Thành viên:</strong> @string.Join(", ", team.Members)</p>
-            <p class="mb-0"><strong>Phong độ:</strong> @team.RecentForm</p>
+          <div style="background:linear-gradient(135deg, #f0fdf4, #ecfdf5);border-radius:var(--ff-radius-sm);padding:20px;margin-bottom:14px;border:1px solid #d1fae5;">
+            <div style="display:flex;align-items:center;gap:14px;margin-bottom:16px;">
+              <div style="width:54px;height:54px;border-radius:14px;background:linear-gradient(135deg,#059669,#0891b2);display:flex;align-items:center;justify-content:center;color:#fff;font-size:1.4rem;">
+                <i class="ti ti-shield"></i>
+              </div>
+              <div>
+                <h4 style="margin:0;font-weight:700;color:var(--ff-text);font-size:1.15rem;">@team.TeamName</h4>
+                <span style="font-size:0.82rem;color:var(--ff-text-muted);">Khu vực: @team.HomeArea</span>
+              </div>
+              @if (team.LookingForOpponent)
+              {
+                <span class="ff-badge ff-badge-success ff-badge-pill ms-auto"><i class="ti ti-search"></i> Đang tìm đối</span>
+              }
+            </div>
+            <div class="row g-2">
+              <div class="col-4">
+                <div style="text-align:center;padding:10px;background:#fff;border-radius:8px;">
+                  <div style="font-size:0.72rem;color:var(--ff-text-muted);text-transform:uppercase;letter-spacing:0.3px;">Trình độ</div>
+                  <div style="font-weight:700;color:var(--ff-text);font-size:0.95rem;">@team.QualityLevel</div>
+                </div>
+              </div>
+              <div class="col-4">
+                <div style="text-align:center;padding:10px;background:#fff;border-radius:8px;">
+                  <div style="font-size:0.72rem;color:var(--ff-text-muted);text-transform:uppercase;letter-spacing:0.3px;">Thành viên</div>
+                  <div style="font-weight:700;color:var(--ff-text);font-size:0.95rem;">@team.Members.Count</div>
+                </div>
+              </div>
+              <div class="col-4">
+                <div style="text-align:center;padding:10px;background:#fff;border-radius:8px;">
+                  <div style="font-size:0.72rem;color:var(--ff-text-muted);text-transform:uppercase;letter-spacing:0.3px;">Phong độ</div>
+                  <div style="font-weight:700;color:var(--ff-success);font-size:0.85rem;">@team.RecentForm.Split(':').Last().Trim()</div>
+                </div>
+              </div>
+            </div>
+            <div style="margin-top:14px;">
+              <span style="font-size:0.78rem;color:var(--ff-text-muted);font-weight:500;">Thành viên:</span>
+              @foreach (var member in team.Members)
+              {
+                <span class="ff-badge ff-badge-primary me-1 mt-1">@member</span>
+              }
+            </div>
           </div>
         }
       </div>
     </div>
   </div>
 
-  <div class="col-md-6 mb-4">
-    <div class="card h-100">
-      <div class="card-header">
-        <h5>Tuyển quân & Đá bù</h5>
+  <!-- Match Management -->
+  <div class="col-xl-6 ff-animate-in">
+    <div class="ff-card">
+      <div class="ff-card-header">
+        <h5><i class="ti ti-swords"></i> Kèo Đấu (Gạ Đối)</h5>
+        <span class="ff-badge ff-badge-primary ff-badge-pill">@Model.Matches.Count trận</span>
       </div>
-      <div class="card-body">
-        <ul class="list-group list-group-flush">
-          @foreach (var ad in Model.RecruitmentAds)
-          {
-            <li class="list-group-item">
-              <strong class="text-warning">@ad.Title (@ad.PositionNeeded)</strong> cho đội @ad.TeamName<br/>
-              <em>@ad.Content</em> <br/> <span class="badge bg-danger mt-1">@ad.UrgencyLabel</span>
-            </li>
-          }
-        </ul>
+      <div class="ff-card-body">
+        @foreach (var match in Model.Matches)
+        {
+          <div class="ff-match-card">
+            <div class="ff-match-vs">
+              <div class="ff-match-team">
+                <div class="team-avatar" style="background:linear-gradient(135deg,#059669,#0891b2);">
+                  @match.HomeTeamName.Substring(0, 2)
+                </div>
+                <div class="team-name">@match.HomeTeamName</div>
+              </div>
+              <div class="ff-match-divider">VS</div>
+              <div class="ff-match-team">
+                <div class="team-avatar" style="background:linear-gradient(135deg,#dc2626,#f59e0b);">
+                  @(match.AwayTeamName.Length >= 2 ? match.AwayTeamName.Substring(0, 2) : match.AwayTeamName)
+                </div>
+                <div class="team-name">@match.AwayTeamName</div>
+              </div>
+            </div>
+            <div class="ff-match-info">
+              <span class="ff-badge @(match.MatchStatus == "Đã chấp nhận" ? "ff-badge-success" : "ff-badge-warning") ff-badge-pill">@match.MatchStatus</span>
+              <span><i class="ti ti-clock"></i> @match.KickoffLabel</span>
+              <span><i class="ti ti-map-pin"></i> @match.VenueLabel</span>
+            </div>
+            <div style="margin-top:12px;padding-top:10px;border-top:1px solid var(--ff-border);font-size:0.82rem;color:var(--ff-text-muted);">
+              <i class="ti ti-users" style="color:var(--ff-success);"></i> @match.AttendanceSummary
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Bottom Row -->
+<div class="row g-3 mb-4">
+  <!-- Recruitment -->
+  <div class="col-xl-6 ff-animate-in">
+    <div class="ff-card">
+      <div class="ff-card-header">
+        <h5><i class="ti ti-speakerphone"></i> Tuyển Quân & Đá Bù</h5>
+      </div>
+      <div class="ff-card-body">
+        @foreach (var ad in Model.RecruitmentAds)
+        {
+          <div class="ff-list-item">
+            <div class="ff-list-icon" style="background:linear-gradient(135deg, rgba(245,158,11,0.15), rgba(239,68,68,0.1));color:var(--ff-warning);">
+              <i class="ti ti-speakerphone"></i>
+            </div>
+            <div class="ff-list-content">
+              <h6>@ad.Title</h6>
+              <p>@ad.Content</p>
+              <div style="margin-top:6px;display:flex;gap:6px;flex-wrap:wrap;">
+                <span class="ff-badge ff-badge-purple">@ad.PositionNeeded</span>
+                <span class="ff-badge ff-badge-danger">@ad.UrgencyLabel</span>
+                <span class="ff-badge ff-badge-info">@ad.MatchLabel</span>
+              </div>
+            </div>
+          </div>
+        }
       </div>
     </div>
   </div>
 
-  <div class="col-md-6 mb-4">
-    <div class="card h-100">
-      <div class="card-header">
-        <h5>Quản lý Kèo đấu (Gà đối)</h5>
+  <!-- Schedule -->
+  <div class="col-xl-6 ff-animate-in">
+    <div class="ff-card">
+      <div class="ff-card-header">
+        <h5><i class="ti ti-calendar"></i> Lịch Sân</h5>
       </div>
-      <div class="card-body">
-        <ul class="list-group list-group-flush">
-          @foreach (var match in Model.Matches)
-          {
-            <li class="list-group-item">
-              <strong style="font-size: 1.1em;">@match.HomeTeamName vs @match.AwayTeamName</strong><br/>
-              <span class="text-muted">@match.KickoffLabel</span> - <strong class="text-primary">@match.MatchStatus</strong><br/>
-              <em>@match.VenueLabel</em><br/>
-              <strong class="text-success"><i class="ti ti-users"></i> Điểm danh:</strong> @match.AttendanceSummary
-            </li>
-          }
-        </ul>
-      </div>
-    </div>
-  </div>
+      <div class="ff-card-body">
+        <h6 style="font-size:0.78rem;text-transform:uppercase;letter-spacing:0.5px;color:var(--ff-text-muted);margin-bottom:12px;">Đặt lẻ sắp tới</h6>
+        @foreach (var schedule in Model.UpcomingSchedules.Where(s => s.BookedByName.Contains("FC")))
+        {
+          <div class="ff-list-item">
+            <div class="ff-list-icon" style="background:linear-gradient(135deg, rgba(6,182,212,0.15), rgba(37,99,235,0.1));color:var(--ff-info);">
+              <i class="ti ti-calendar-time"></i>
+            </div>
+            <div class="ff-list-content">
+              <h6>@schedule.PitchName — @schedule.WindowLabel</h6>
+              <p>@schedule.BookedByName</p>
+            </div>
+            <span class="ff-badge ff-badge-info ff-badge-pill">@schedule.Status</span>
+          </div>
+        }
 
-  <div class="col-md-6 mb-4">
-    <div class="card h-100">
-      <div class="card-header">
-        <h5>Quản lý Lịch sân</h5>
-      </div>
-      <div class="card-body">
-        <h6 class="border-bottom pb-2">Sắp tới (Đặt lẻ)</h6>
-        <ul class="list-group list-group-flush mb-3">
-          @foreach (var schedule in Model.UpcomingSchedules.Where(s => s.BookedByName.Contains("FC")))
-          {
-            <li class="list-group-item d-flex justify-content-between align-items-center">
-              <span><strong>@schedule.PitchName</strong> — @schedule.WindowLabel</span>
-              <span class="badge bg-info">@schedule.Status</span>
-            </li>
-          }
-        </ul>
-        <h6 class="border-bottom pb-2">Cố định hàng tuần</h6>
-        <ul class="list-group list-group-flush">
-          @foreach (var booking in Model.RecurringBookings)
-          {
-            <li class="list-group-item d-flex justify-content-between align-items-center">
-              <span><strong>@booking.PitchName</strong> — @booking.WeeklySlot</span>
-              <span class="badge bg-success">@(booking.IsApproved ? "Đã duyệt" : "Chờ duyệt")</span>
-            </li>
-          }
-        </ul>
+        <h6 style="font-size:0.78rem;text-transform:uppercase;letter-spacing:0.5px;color:var(--ff-text-muted);margin:18px 0 12px;">Lịch cố định hàng tuần</h6>
+        @foreach (var booking in Model.RecurringBookings)
+        {
+          <div class="ff-list-item">
+            <div class="ff-list-icon" style="background:linear-gradient(135deg, rgba(16,185,129,0.15), rgba(6,182,212,0.1));color:var(--ff-success);">
+              <i class="ti ti-repeat"></i>
+            </div>
+            <div class="ff-list-content">
+              <h6>@booking.PitchName — @booking.WeeklySlot</h6>
+              <p>Đội: @booking.TeamName · @booking.DateRange</p>
+            </div>
+            <span class="ff-badge @(booking.IsApproved ? "ff-badge-success" : "ff-badge-warning") ff-badge-pill">@(booking.IsApproved ? "Đã duyệt" : "Chờ duyệt")</span>
+          </div>
+        }
       </div>
     </div>
   </div>

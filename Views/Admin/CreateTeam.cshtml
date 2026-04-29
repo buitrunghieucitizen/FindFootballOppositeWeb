@@ -1,0 +1,47 @@
+@model FindFootballOppsite.Models.Team
+@{
+    ViewData["Title"] = "Thêm Đội bóng";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="ff-dashboard-hero ff-animate-in" style="background:linear-gradient(135deg,#059669,#0891b2);">
+  <h2><i class="ti ti-shield-plus"></i> Thêm Đội Bóng Mới</h2>
+  <p>Đăng ký đội bóng mới vào hệ thống FindFootball.</p>
+</div>
+
+<a href="@Url.Action("Teams", "Admin")" class="ff-btn ff-btn-outline mb-3 ff-animate-in"><i class="ti ti-arrow-left"></i> Quay lại danh sách</a>
+
+<div class="ff-form-card ff-animate-in">
+  <div class="ff-card-header"><h5><i class="ti ti-shield-plus"></i> Thông tin đội bóng</h5></div>
+  <div class="ff-card-body">
+    <form asp-action="CreateTeam" method="post">
+      <div class="ff-form-group">
+        <label asp-for="TeamName">Tên Đội bóng <span style="color:var(--ff-danger);">*</span></label>
+        <input asp-for="TeamName" placeholder="VD: FC Lập Trình" required />
+        <span asp-validation-for="TeamName" style="font-size:0.78rem;color:var(--ff-danger);"></span>
+      </div>
+      <div class="ff-form-group">
+        <label asp-for="CaptainId">ID Đội trưởng</label>
+        <input asp-for="CaptainId" type="number" placeholder="ID người dùng làm đội trưởng" />
+      </div>
+      <div class="ff-form-group">
+        <label asp-for="QualityLevel">Trình độ</label>
+        <select asp-for="QualityLevel">
+          <option value="">— Chọn trình độ —</option>
+          <option value="Gà">Gà (Mới chơi)</option>
+          <option value="Trung bình">Trung bình</option>
+          <option value="Khá">Khá</option>
+          <option value="Giỏi">Giỏi</option>
+        </select>
+      </div>
+      <div class="ff-form-group">
+        <label asp-for="History">Mô tả đội</label>
+        <textarea asp-for="History" rows="3" placeholder="Giới thiệu về đội bóng..."></textarea>
+      </div>
+      <div style="display:flex;gap:10px;padding-top:8px;">
+        <button type="submit" class="ff-btn ff-btn-success ff-btn-lg"><i class="ti ti-check"></i> Lưu đội bóng</button>
+        <a href="@Url.Action("Teams", "Admin")" class="ff-btn ff-btn-outline ff-btn-lg">Hủy</a>
+      </div>
+    </form>
+  </div>
+</div>

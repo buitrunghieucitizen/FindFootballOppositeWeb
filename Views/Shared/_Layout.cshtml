@@ -107,9 +107,9 @@
 
     @if (TempData["SuccessMessage"] != null)
     {
-        <div class="alert alert-success" role="alert" style="position: fixed; top: 100px; right: 20px; z-index: 9999; box-shadow: 0 4px 6px rgba(0,0,0,0.1); padding-right: 40px;">
+        <div id="ffo-toast" style="position:fixed;top:100px;right:20px;z-index:9999;padding:16px 40px 16px 20px;border-radius:12px;background:linear-gradient(135deg,#0d9488,#0ea5e9);color:#fff;font-weight:600;box-shadow:0 10px 40px rgba(13,148,136,.3);animation:authFadeIn .4s ease-out;">
             @TempData["SuccessMessage"]
-            <button type="button" onclick="this.parentElement.style.display='none';" style="position: absolute; top: 10px; right: 10px; background: none; border: none; font-size: 1.2rem; cursor: pointer; color: #155724;">&times;</button>
+            <button type="button" onclick="this.parentElement.style.display='none';" style="position:absolute;top:12px;right:12px;background:none;border:none;font-size:1.2rem;cursor:pointer;color:rgba(255,255,255,.8);">&times;</button>
         </div>
     }
 

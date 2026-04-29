@@ -5,32 +5,32 @@
 
 @if (TempData["Success"] != null)
 {
-    <div class="alert alert-success" role="alert">
-        @TempData["Success"]
-    </div>
+    <div class="alert alert-success" role="alert">@TempData["Success"]</div>
 }
-
 @if (TempData["Error"] != null)
 {
-    <div class="alert alert-danger" role="alert">
-        @TempData["Error"]
-    </div>
+    <div class="alert alert-danger" role="alert">@TempData["Error"]</div>
 }
 
 <div class="ffo-page">
+    <!-- HERO -->
     <section id="home" class="home_bg ffo-home-hero" style="background-image: url(/assets/img/bg/home-bg.jpg); background-size: cover; background-position: center center;">
         <div class="container">
             <div class="row">
                 <div class="col-lg-10 offset-lg-1 col-sm-12 col-xs-12 text-center">
                     <div class="hero-text">
-                        <h2>Đặt sân, gạ đối, tuyển quân trên cùng một nền tảng</h2>
-                        <p>
+                        <h2 class="wow fadeInUp" data-wow-delay=".2s">Đặt sân · Gạ đối · Tuyển quân<br/>Tất cả trên một nền tảng</h2>
+                        <p class="wow fadeInUp" data-wow-delay=".4s">
                             Nền tảng giúp cầu thủ tìm đội, đội trưởng đặt sân và gạ đối,
                             chủ sân duyệt lịch, quản trị viên giám sát vận hành — tất cả trong một.
                         </p>
-                        <div class="home_btn">
-                            <a asp-controller="Home" asp-action="Matches" class="app-btn wow bounceIn page-scroll home_btn_color_one" data-wow-delay=".6s">Gạ đối ngay</a>
-                            <a asp-controller="Home" asp-action="Stadiums" class="app-btn wow bounceIn page-scroll home_btn_color_two" data-wow-delay=".8s">Xem lịch sân</a>
+                        <div class="home_btn wow fadeInUp" data-wow-delay=".6s">
+                            <a asp-controller="Home" asp-action="Matches" class="app-btn page-scroll home_btn_color_one">
+                                <i class="fa fa-bolt" style="margin-right:8px;"></i>Gạ đối ngay
+                            </a>
+                            <a asp-controller="Home" asp-action="Stadiums" class="app-btn page-scroll home_btn_color_two">
+                                <i class="fa fa-calendar" style="margin-right:8px;"></i>Xem lịch sân
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -38,28 +38,29 @@
         </div>
     </section>
 
+    <!-- METRICS -->
     <div class="search_bar section-padding">
         <div class="container">
             <div class="row g-4">
-                <div class="col-lg-3 col-sm-6 col-xs-12">
+                <div class="col-lg-3 col-sm-6 col-xs-12 wow fadeInUp" data-wow-delay=".1s">
                     <div class="ffo-quick-card">
                         <h3>@Model.Metrics.TeamCount</h3>
                         <p>Đội đang hoạt động</p>
                     </div>
                 </div>
-                <div class="col-lg-3 col-sm-6 col-xs-12">
+                <div class="col-lg-3 col-sm-6 col-xs-12 wow fadeInUp" data-wow-delay=".2s">
                     <div class="ffo-quick-card">
                         <h3>@Model.Metrics.PitchCount</h3>
                         <p>Sân đang khai thác</p>
                     </div>
                 </div>
-                <div class="col-lg-3 col-sm-6 col-xs-12">
+                <div class="col-lg-3 col-sm-6 col-xs-12 wow fadeInUp" data-wow-delay=".3s">
                     <div class="ffo-quick-card">
                         <h3>@Model.Metrics.UpcomingMatchCount</h3>
                         <p>Kèo sắp diễn ra</p>
                     </div>
                 </div>
-                <div class="col-lg-3 col-sm-6 col-xs-12">
+                <div class="col-lg-3 col-sm-6 col-xs-12 wow fadeInUp" data-wow-delay=".4s">
                     <div class="ffo-quick-card">
                         <h3>@Model.Metrics.FreeAgentCount</h3>
                         <p>Cầu thủ tự do</p>
@@ -69,6 +70,7 @@
         </div>
     </div>
 
+    <!-- STADIUMS -->
     <section class="template_property">
         <div class="container">
             <div class="section-title text-center wow zoomIn">
@@ -82,7 +84,9 @@
                     {
                         <div class="col-lg-4 col-sm-12 col-xs-12">
                             <div class="single_property ffo-single-property">
-                                <img src="~/assets/img/property/@((pitch.PitchId % 6) + 1).jpg" class="img-fluid" alt="@pitch.PitchName" />
+                                <div style="overflow:hidden;">
+                                    <img src="~/assets/img/property/@((pitch.PitchId % 6) + 1).jpg" class="img-fluid" alt="@pitch.PitchName" />
+                                </div>
                                 <div class="single_property_description text-center">
                                     <span><i class="fa fa-futbol-o"></i> Sân @pitch.PitchSize người</span>
                                     <span><i class="fa fa-map-marker"></i> @stadium.StadiumName</span>
@@ -107,6 +111,7 @@
         </div>
     </section>
 
+    <!-- TEAMS -->
     <section id="team" class="our_team section-padding">
         <div class="container">
             <div class="section-title text-center wow zoomIn">
@@ -118,7 +123,9 @@
                 {
                     <div class="col-lg-4 col-sm-6 col-xs-12">
                         <div class="single_team ffo-single-team">
-                            <img src="~/assets/img/team/team-@((team.TeamId % 4) + 1).jpg" class="img-fluid" alt="@team.TeamName" />
+                            <div style="overflow:hidden;">
+                                <img src="~/assets/img/team/team-@((team.TeamId % 4) + 1).jpg" class="img-fluid" alt="@team.TeamName" />
+                            </div>
                             <h3>@team.TeamName</h3>
                             <p>@team.CaptainName — @team.QualityLevel</p>
                             <ul class="list-inline">
@@ -132,7 +139,9 @@
                 {
                     <div class="col-lg-4 col-sm-6 col-xs-12">
                         <div class="single_team ffo-single-team">
-                            <img src="~/assets/img/team/@((player.UserId % 4) + 1).png" class="img-fluid" alt="@player.FullName" />
+                            <div style="overflow:hidden;">
+                                <img src="~/assets/img/team/@((player.UserId % 4) + 1).png" class="img-fluid" alt="@player.FullName" />
+                            </div>
                             <h3>@player.FullName</h3>
                             <p>@player.PreferredPosition — Đang rảnh</p>
                             <ul class="list-inline">
@@ -146,6 +155,7 @@
         </div>
     </section>
 
+    <!-- RECRUITMENT & ROLES -->
     <section class="blog_area section-padding">
         <div class="container">
             <div class="section-title text-center wow zoomIn">
@@ -157,7 +167,9 @@
                 {
                     <div class="col-lg-4 col-sm-6 col-xs-12">
                         <div class="single_blog wow fadeInUp">
-                            <img src="~/assets/img/blog/blog-@((ad.AdId % 3) + 1).jpg" class="img-fluid" alt="@ad.Title" />
+                            <div style="overflow:hidden;">
+                                <img src="~/assets/img/blog/blog-@((ad.AdId % 3) + 1).jpg" class="img-fluid" alt="@ad.Title" />
+                            </div>
                             <div class="blog_content">
                                 <h3><a asp-controller="Home" asp-action="Recruitment">@ad.Title</a></h3>
                                 <p>@ad.Content</p>
@@ -175,7 +187,7 @@
             <div class="row mt-5">
                 @foreach (var actor in Model.ActorCapabilities)
                 {
-                    <div class="col-lg-4 col-sm-6 col-xs-12">
+                    <div class="col-lg-4 col-sm-6 col-xs-12 wow fadeInUp">
                         <div class="ffo-role-card">
                             <span class="ffo-status">@actor.ActorName</span>
                             <h3>@actor.Summary</h3>

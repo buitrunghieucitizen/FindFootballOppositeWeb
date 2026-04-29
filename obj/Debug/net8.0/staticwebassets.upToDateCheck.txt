@@ -121,6 +121,7 @@ wwwroot\assets\assets_for_admin_stadiumOwner_Captain\scss\themes\_generic.scss
 wwwroot\assets\bootstrap\css\bootstrap.min.css
 wwwroot\assets\bootstrap\js\bootstrap.min.js
 wwwroot\assets\css\animate.css
+wwwroot\assets\css\dashboard.css
 wwwroot\assets\css\flexslider.css
 wwwroot\assets\css\fonts.css
 wwwroot\assets\css\magnific-popup.css
@@ -406,7 +407,6 @@ wwwroot\css\magnific-popup.css
 wwwroot\css\menu.css
 wwwroot\css\prettyPhoto.css
 wwwroot\css\responsive.css
-wwwroot\css\site.css
 wwwroot\css\slick.css
 wwwroot\css\style.css
 wwwroot\css\YTPlayer.css
@@ -636,3 +636,4 @@ wwwroot\property.html
 wwwroot\register.html
 wwwroot\single_agent.html
 wwwroot\thank-you.html
+wwwroot\css\site.css

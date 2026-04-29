@@ -1,0 +1,98 @@
+@model IEnumerable<FindFootballOppsite.Models.Stadium>
+@{
+    ViewData["Title"] = "Quản lý Sân bóng";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    var currentPage = (int)(ViewBag.CurrentPage ?? 1);
+    var totalPages = (int)(ViewBag.TotalPages ?? 1);
+    var totalItems = (int)(ViewBag.TotalItems ?? 0);
+    var search = ViewBag.Search as string ?? "";
+}
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="ff-toast"><i class="ti ti-circle-check"></i> @TempData["SuccessMessage"]</div>
+}
+
+<div class="ff-dashboard-hero ff-animate-in" style="background:linear-gradient(135deg,#d97706,#dc2626);">
+  <h2><i class="ti ti-map-pin"></i> Quản Lý Sân Bóng</h2>
+  <p>Quản lý danh sách cụm sân, địa chỉ và thông tin chủ sân.</p>
+</div>
+
+<div class="ff-toolbar ff-animate-in">
+  <form method="get" asp-action="Stadiums" class="ff-search-box">
+    <i class="ti ti-search ff-search-icon"></i>
+    <input type="text" name="search" value="@search" placeholder="Tìm theo tên sân hoặc địa chỉ..." />
+  </form>
+  <div class="ff-toolbar-actions">
+    <span class="ff-badge ff-badge-warning ff-badge-pill">@totalItems sân bóng</span>
+    <a href="@Url.Action("CreateStadium", "Admin")" class="ff-btn ff-btn-warning"><i class="ti ti-plus"></i> Thêm mới</a>
+  </div>
+</div>
+
+<div class="ff-card ff-animate-in" style="height:auto;">
+  <div class="ff-card-body" style="padding:0;">
+    @if (Model.Any())
+    {
+      <div class="table-responsive">
+        <table class="ff-table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Tên sân</th>
+              <th>Địa chỉ</th>
+              <th>Chủ sân</th>
+              <th>Ngày tạo</th>
+              <th style="text-align:right;">Thao tác</th>
+            </tr>
+          </thead>
+          <tbody>
+            @foreach (var stadium in Model)
+            {
+              <tr>
+                <td><span class="ff-badge ff-badge-warning">#@stadium.StadiumId</span></td>
+                <td>
+                  <div style="display:flex;align-items:center;gap:10px;">
+                    <div style="width:36px;height:36px;border-radius:12px;background:linear-gradient(135deg,#d97706,#dc2626);display:flex;align-items:center;justify-content:center;color:#fff;font-size:1rem;flex-shrink:0;">
+                      <i class="ti ti-building-stadium"></i>
+                    </div>
+                    <span style="font-weight:600;">@stadium.StadiumName</span>
+                  </div>
+                </td>
+                <td style="font-size:0.85rem;"><i class="ti ti-map-pin" style="color:var(--ff-warning);font-size:0.85rem;"></i> @(stadium.Address ?? "—")</td>
+                <td>@(stadium.Owner != null ? stadium.Owner.FullName : (stadium.OwnerId.HasValue ? $"ID: {stadium.OwnerId}" : "—"))</td>
+                <td style="font-size:0.82rem;color:var(--ff-text-muted);">@(stadium.CreatedAt?.ToString("dd/MM/yyyy") ?? "—")</td>
+                <td style="text-align:right;">
+                  <div style="display:flex;gap:6px;justify-content:flex-end;">
+                    <a href="@Url.Action("StadiumDetails", "Admin", new { id = stadium.StadiumId })" class="ff-btn ff-btn-info ff-btn-sm" title="Chi tiết"><i class="ti ti-eye"></i></a>
+                    <a href="@Url.Action("EditStadium", "Admin", new { id = stadium.StadiumId })" class="ff-btn ff-btn-warning ff-btn-sm" title="Sửa"><i class="ti ti-edit"></i></a>
+                    <a href="@Url.Action("DeleteStadium", "Admin", new { id = stadium.StadiumId })" class="ff-btn ff-btn-danger ff-btn-sm" title="Xóa" onclick="return confirm('Bạn có chắc chắn muốn xóa sân bóng này?');"><i class="ti ti-trash"></i></a>
+                  </div>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+
+      @if (totalPages > 1)
+      {
+        <div class="ff-pagination" style="padding:12px 20px;">
+          <div class="ff-pagination-info">Trang @currentPage / @totalPages · @totalItems kết quả</div>
+          <div class="ff-pagination-pages">
+            <a href="@Url.Action("Stadiums", "Admin", new { search, page = currentPage - 1 })" class="@(currentPage <= 1 ? "disabled" : "")"><i class="ti ti-chevron-left"></i></a>
+            @for (int i = 1; i <= totalPages; i++)
+            {
+              if (i == currentPage) { <span class="active">@i</span> }
+              else { <a href="@Url.Action("Stadiums", "Admin", new { search, page = i })">@i</a> }
+            }
+            <a href="@Url.Action("Stadiums", "Admin", new { search, page = currentPage + 1 })" class="@(currentPage >= totalPages ? "disabled" : "")"><i class="ti ti-chevron-right"></i></a>
+          </div>
+        </div>
+      }
+    }
+    else
+    {
+      <div class="ff-empty-state"><i class="ti ti-map-pin-off"></i><p>Không tìm thấy sân bóng nào</p></div>
+    }
+  </div>
+</div>

@@ -1,0 +1,39 @@
+@model FindFootballOppsite.Models.User
+@{
+    ViewData["Title"] = "Sửa Người dùng";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="ff-dashboard-hero ff-animate-in">
+  <h2><i class="ti ti-user-edit"></i> Sửa Thông Tin Người Dùng</h2>
+  <p>Cập nhật thông tin tài khoản #@Model.UserId</p>
+</div>
+
+<a href="@Url.Action("Users", "Admin")" class="ff-btn ff-btn-outline mb-3 ff-animate-in"><i class="ti ti-arrow-left"></i> Quay lại danh sách</a>
+
+<div class="ff-form-card ff-animate-in">
+  <div class="ff-card-header"><h5><i class="ti ti-user-edit"></i> Chỉnh sửa thông tin</h5></div>
+  <div class="ff-card-body">
+    <form asp-action="EditUser" method="post">
+      <input type="hidden" asp-for="UserId" />
+      <input type="hidden" asp-for="CreatedAt" />
+      <div class="ff-form-group">
+        <label asp-for="Username">Tên đăng nhập</label>
+        <input asp-for="Username" required />
+        <span asp-validation-for="Username" style="font-size:0.78rem;color:var(--ff-danger);"></span>
+      </div>
+      <div class="ff-form-group">
+        <label asp-for="FullName">Họ và Tên</label>
+        <input asp-for="FullName" required />
+      </div>
+      <div class="ff-form-group">
+        <label asp-for="Phone">Số điện thoại</label>
+        <input asp-for="Phone" />
+      </div>
+      <div style="display:flex;gap:10px;padding-top:8px;">
+        <button type="submit" class="ff-btn ff-btn-primary ff-btn-lg"><i class="ti ti-check"></i> Cập nhật</button>
+        <a href="@Url.Action("Users", "Admin")" class="ff-btn ff-btn-outline ff-btn-lg">Hủy</a>
+      </div>
+    </form>
+  </div>
+</div>

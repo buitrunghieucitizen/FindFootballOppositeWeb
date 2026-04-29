@@ -1,0 +1,39 @@
+@model FindFootballOppsite.Models.Match
+@{
+    ViewData["Title"] = "Sửa Trận đấu";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="ff-dashboard-hero ff-animate-in" style="background:linear-gradient(135deg,#7c3aed,#2563eb);">
+  <h2><i class="ti ti-calendar-event"></i> Sửa Trận Đấu #@Model.MatchId</h2>
+  <p>Cập nhật thông tin trận đấu.</p>
+</div>
+
+<a href="@Url.Action("Matches", "Admin")" class="ff-btn ff-btn-outline mb-3"><i class="ti ti-arrow-left"></i> Quay lại</a>
+
+<div class="ff-form-card">
+  <div class="ff-card-header"><h5><i class="ti ti-calendar-event"></i> Chỉnh sửa</h5></div>
+  <div class="ff-card-body">
+    <form asp-action="EditMatch" method="post">
+      <input type="hidden" asp-for="MatchId" />
+      <div class="ff-form-group"><label asp-for="HomeTeamId">ID Đội nhà</label><input asp-for="HomeTeamId" type="number" /></div>
+      <div class="ff-form-group"><label asp-for="AwayTeamId">ID Đội khách</label><input asp-for="AwayTeamId" type="number" /></div>
+      <div class="ff-form-group"><label asp-for="ScheduleId">ID Lịch sân</label><input asp-for="ScheduleId" type="number" /></div>
+      <div class="ff-form-group">
+        <label asp-for="MatchStatus">Trạng thái</label>
+        <select asp-for="MatchStatus">
+          <option value="Proposed">Đề xuất</option>
+          <option value="Accepted">Đã chấp nhận</option>
+          <option value="Completed">Hoàn thành</option>
+          <option value="CancelPending">Chờ hủy</option>
+          <option value="Cancelled">Đã hủy</option>
+        </select>
+      </div>
+      <div class="ff-form-group"><label asp-for="CancelReason">Lý do hủy</label><textarea asp-for="CancelReason" rows="2" placeholder="Nếu có..."></textarea></div>
+      <div style="display:flex;gap:10px;padding-top:8px;">
+        <button type="submit" class="ff-btn ff-btn-primary ff-btn-lg"><i class="ti ti-check"></i> Cập nhật</button>
+        <a href="@Url.Action("Matches", "Admin")" class="ff-btn ff-btn-outline ff-btn-lg">Hủy</a>
+      </div>
+    </form>
+  </div>
+</div>

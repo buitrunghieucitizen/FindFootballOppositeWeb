@@ -79,7 +79,7 @@ public sealed class PortalDataService
                 CaptainName = "Hiếu",
                 QualityLevel = "Khá",
                 History = "Đội bóng anh em IT giao lưu cuối tuần, ưu tiên kèo đẹp và đúng giờ.",
-                HomeArea = "Cầu Giấy",
+                HomeArea = "Cầu Giấy",  // Actually HomeArea in display context
                 RecentForm = "3 trận gần nhất: Thắng 2, Hoà 1",
                 LookingForOpponent = true,
                 Members = new[] { "Hiếu", "Nguyễn Quang Hải", "Đang mở tuyển thêm 1 tiền vệ" }
@@ -91,7 +91,7 @@ public sealed class PortalDataService
                 CaptainName = "Đoàn Văn Hậu",
                 QualityLevel = "Trung bình",
                 History = "Đội bóng sinh viên, thích kèo 7 người và sân cỏ mới.",
-                HomeArea = "Hà Đông",
+                HomeArea = "Hà Đông",  // Actually HomeArea in display context
                 RecentForm = "3 trận gần nhất: Thắng 1, Thua 2",
                 LookingForOpponent = false,
                 Members = new[] { "Đoàn Văn Hậu", "Đang duyệt 2 yêu cầu gia nhập" }

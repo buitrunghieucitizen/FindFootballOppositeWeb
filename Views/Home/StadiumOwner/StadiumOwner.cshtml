@@ -4,99 +4,159 @@
     Layout = "_AdminLayout";
 }
 
-<div class="page-header">
-  <div class="page-block">
-    <div class="row align-items-center">
-      <div class="col-md-12">
-        <ul class="breadcrumb">
-          <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
-          <li class="breadcrumb-item" aria-current="page">Stadium Owner</li>
-        </ul>
+<!-- Hero Header -->
+<div class="ff-dashboard-hero ff-animate-in" style="background:linear-gradient(135deg, #d97706 0%, #dc2626 100%);">
+  <h2><i class="ti ti-building-stadium"></i> Bảng Điều Khiển Chủ Sân</h2>
+  <p>Quản lý cụm sân, theo dõi lịch đặt, duyệt booking và giám sát công suất khai thác.</p>
+  <span class="ff-hero-badge"><i class="ti ti-chart-bar"></i> Báo cáo vận hành</span>
+</div>
+
+<!-- Stat Cards -->
+<div class="row g-3 mb-4">
+  <div class="col-md-6 col-xl-3 ff-animate-in">
+    <div class="ff-stat-card">
+      <div class="ff-stat-icon bg-warning-soft"><i class="ti ti-building"></i></div>
+      <div class="ff-stat-value">@Model.Metrics.StadiumCount</div>
+      <div class="ff-stat-label">Cụm Sân</div>
+    </div>
+  </div>
+  <div class="col-md-6 col-xl-3 ff-animate-in">
+    <div class="ff-stat-card">
+      <div class="ff-stat-icon bg-success-soft"><i class="ti ti-soccer-field"></i></div>
+      <div class="ff-stat-value">@Model.Metrics.PitchCount</div>
+      <div class="ff-stat-label">Tổng Sân Con</div>
+    </div>
+  </div>
+  <div class="col-md-6 col-xl-3 ff-animate-in">
+    <div class="ff-stat-card">
+      <div class="ff-stat-icon bg-primary-soft"><i class="ti ti-calendar-check"></i></div>
+      <div class="ff-stat-value">@Model.UpcomingSchedules.Count</div>
+      <div class="ff-stat-label">Lịch Sắp Tới</div>
+    </div>
+  </div>
+  <div class="col-md-6 col-xl-3 ff-animate-in">
+    <div class="ff-stat-card">
+      <div class="ff-stat-icon bg-info-soft"><i class="ti ti-repeat"></i></div>
+      <div class="ff-stat-value">@Model.RecurringBookings.Count</div>
+      <div class="ff-stat-label">Hợp Đồng Cố Định</div>
+    </div>
+  </div>
+</div>
+
+<!-- Stadium Details -->
+@foreach (var stadium in Model.Stadiums)
+{
+<div class="row g-3 mb-4 ff-animate-in">
+  <div class="col-12">
+    <div class="ff-card">
+      <div class="ff-card-header">
+        <h5><i class="ti ti-building-stadium"></i> @stadium.StadiumName</h5>
+        <div style="display:flex;gap:8px;align-items:center;">
+          <span class="ff-badge ff-badge-success ff-badge-pill"><span class="ff-live-dot" style="width:6px;height:6px;margin-right:4px;"></span> Đang hoạt động</span>
+        </div>
       </div>
-      <div class="col-md-12">
-        <div class="page-header-title">
-          <h2 class="mb-0">Dashboard Chủ Sân</h2>
+      <div class="ff-card-body">
+        <!-- Stadium Info Bar -->
+        <div style="display:flex;flex-wrap:wrap;gap:20px;align-items:center;margin-bottom:24px;padding:16px 20px;background:linear-gradient(135deg,#fffbeb,#fef3c7);border-radius:var(--ff-radius-sm);border:1px solid #fde68a;">
+          <div style="display:flex;align-items:center;gap:10px;">
+            <i class="ti ti-map-pin" style="font-size:1.2rem;color:var(--ff-warning-dark);"></i>
+            <div>
+              <div style="font-size:0.72rem;color:var(--ff-text-muted);text-transform:uppercase;">Địa chỉ</div>
+              <div style="font-weight:600;color:var(--ff-text);font-size:0.9rem;">@stadium.Address</div>
+            </div>
+          </div>
+          <div style="display:flex;align-items:center;gap:10px;">
+            <i class="ti ti-user" style="font-size:1.2rem;color:var(--ff-warning-dark);"></i>
+            <div>
+              <div style="font-size:0.72rem;color:var(--ff-text-muted);text-transform:uppercase;">Chủ sân</div>
+              <div style="font-weight:600;color:var(--ff-text);font-size:0.9rem;">@stadium.OwnerName</div>
+            </div>
+          </div>
+          <div style="display:flex;align-items:center;gap:10px;">
+            <i class="ti ti-chart-pie" style="font-size:1.2rem;color:var(--ff-warning-dark);"></i>
+            <div>
+              <div style="font-size:0.72rem;color:var(--ff-text-muted);text-transform:uppercase;">Công suất</div>
+              <div style="font-weight:600;color:var(--ff-success-dark);font-size:0.9rem;">@stadium.UtilizationLabel</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Pitch Grid -->
+        <h6 style="font-size:0.78rem;text-transform:uppercase;letter-spacing:0.5px;color:var(--ff-text-muted);margin-bottom:14px;">Danh Sách Sân Con</h6>
+        <div class="row g-3">
+          @foreach (var pitch in stadium.Pitches)
+          {
+            <div class="col-md-4">
+              <div class="ff-pitch-card">
+                <div class="pitch-icon">
+                  <i class="ti ti-soccer-field"></i>
+                </div>
+                <div class="pitch-name">@pitch.PitchName</div>
+                <div class="pitch-type">Sân @pitch.PitchSize người</div>
+                <div class="pitch-price">@pitch.PricePerHour.ToString("N0") VNĐ/giờ</div>
+                <div style="margin-top:10px;">
+                  <span class="ff-badge ff-badge-info ff-badge-pill">@pitch.AvailabilityLabel</span>
+                </div>
+              </div>
+            </div>
+          }
         </div>
       </div>
     </div>
   </div>
 </div>
+}
 
-<div class="row mt-4">
-  <div class="col-12 mb-4">
-    <div class="card">
-      <div class="card-header">
-        <h5>Cơ sở vật chất - Danh sách Sân bóng</h5>
+<!-- Bookings Row -->
+<div class="row g-3 mb-4">
+  <!-- Individual Bookings -->
+  <div class="col-xl-6 ff-animate-in">
+    <div class="ff-card">
+      <div class="ff-card-header">
+        <h5><i class="ti ti-calendar-time"></i> Lịch Đặt Lẻ</h5>
+        <span class="ff-badge ff-badge-primary ff-badge-pill">@Model.UpcomingSchedules.Count lịch</span>
       </div>
-      <div class="card-body">
-        @foreach (var stadium in Model.Stadiums)
+      <div class="ff-card-body">
+        @foreach (var schedule in Model.UpcomingSchedules)
         {
-          <div class="mb-4">
-            <h4 class="text-primary">@stadium.StadiumName</h4>
-            <p><strong>Địa chỉ:</strong> @stadium.Address | <strong class="text-success">@stadium.UtilizationLabel</strong></p>
-            <div class="table-responsive">
-              <table class="table table-striped table-bordered">
-                <thead class="table-light">
-                  <tr>
-                    <th>Tên sân con</th>
-                    <th>Loại sân</th>
-                    <th>Đơn giá/Giờ</th>
-                    <th>Trạng thái</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  @foreach (var pitch in stadium.Pitches)
-                  {
-                    <tr>
-                      <td><strong>@pitch.PitchName</strong></td>
-                      <td>Sân @pitch.PitchSize người</td>
-                      <td>@pitch.PricePerHour.ToString("N0") VNĐ</td>
-                      <td><span class="badge bg-info">@pitch.AvailabilityLabel</span></td>
-                    </tr>
-                  }
-                </tbody>
-              </table>
+          <div class="ff-list-item">
+            <div class="ff-list-icon" style="background:linear-gradient(135deg, rgba(37,99,235,0.15), rgba(139,92,246,0.1));color:var(--ff-primary);">
+              <i class="ti ti-calendar-event"></i>
             </div>
+            <div class="ff-list-content">
+              <h6>@schedule.PitchName</h6>
+              <p><i class="ti ti-clock" style="font-size:0.82rem;"></i> @schedule.WindowLabel</p>
+              <p>Người đặt: <strong>@schedule.BookedByName</strong> · @schedule.TypeLabel</p>
+            </div>
+            <span class="ff-badge @(schedule.Status == "Đã xác nhận" ? "ff-badge-success" : "ff-badge-warning") ff-badge-pill">@schedule.Status</span>
           </div>
         }
       </div>
     </div>
   </div>
 
-  <div class="col-md-6 col-xl-6 mb-4">
-    <div class="card h-100">
-      <div class="card-header">
-        <h5>Lịch đặt lẻ</h5>
+  <!-- Recurring Bookings -->
+  <div class="col-xl-6 ff-animate-in">
+    <div class="ff-card">
+      <div class="ff-card-header">
+        <h5><i class="ti ti-repeat"></i> Hợp Đồng Cố Định Hàng Tuần</h5>
+        <span class="ff-badge ff-badge-success ff-badge-pill">@Model.RecurringBookings.Count hợp đồng</span>
       </div>
-      <div class="card-body">
-        <ul class="list-group list-group-flush">
-          @foreach (var schedule in Model.UpcomingSchedules)
-          {
-            <li class="list-group-item">
-              <strong>@schedule.PitchName:</strong> @schedule.WindowLabel <br/>
-              <span class="text-muted">Người đặt: @schedule.BookedByName</span> - <span class="badge bg-warning text-dark">@schedule.Status</span>
-            </li>
-          }
-        </ul>
-      </div>
-    </div>
-  </div>
-
-  <div class="col-md-6 col-xl-6 mb-4">
-    <div class="card h-100">
-      <div class="card-header bg-light-primary">
-        <h5>Lịch cố định hàng tuần (Hợp đồng dài hạn)</h5>
-      </div>
-      <div class="card-body">
-        <ul class="list-group list-group-flush">
-          @foreach (var booking in Model.RecurringBookings)
-          {
-            <li class="list-group-item">
-              <strong>@booking.PitchName:</strong> @booking.WeeklySlot <br/>
-              <span class="text-muted">Đội: @booking.TeamName (@booking.DateRange)</span> - <span class="badge bg-success">@(booking.IsApproved ? "Đã duyệt" : "Chờ duyệt")</span>
-            </li>
-          }
-        </ul>
+      <div class="ff-card-body">
+        @foreach (var booking in Model.RecurringBookings)
+        {
+          <div class="ff-list-item">
+            <div class="ff-list-icon" style="background:linear-gradient(135deg, rgba(16,185,129,0.15), rgba(6,182,212,0.1));color:var(--ff-success);">
+              <i class="ti ti-repeat"></i>
+            </div>
+            <div class="ff-list-content">
+              <h6>@booking.PitchName — @booking.WeeklySlot</h6>
+              <p>Đội: <strong>@booking.TeamName</strong></p>
+              <p>Thời hạn: @booking.DateRange</p>
+            </div>
+            <span class="ff-badge @(booking.IsApproved ? "ff-badge-success" : "ff-badge-warning") ff-badge-pill">@(booking.IsApproved ? "✓ Đã duyệt" : "⏳ Chờ duyệt")</span>
+          </div>
+        }
       </div>
     </div>
   </div>

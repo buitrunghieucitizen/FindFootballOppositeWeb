@@ -1,0 +1,30 @@
+@model FindFootballOppsite.Models.Stadium
+@{
+    ViewData["Title"] = "Sửa Sân bóng";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="ff-dashboard-hero ff-animate-in" style="background:linear-gradient(135deg,#d97706,#dc2626);">
+  <h2><i class="ti ti-map-pin-cog"></i> Sửa Sân Bóng #@Model.StadiumId</h2>
+  <p>Cập nhật thông tin @Model.StadiumName</p>
+</div>
+
+<a href="@Url.Action("Stadiums", "Admin")" class="ff-btn ff-btn-outline mb-3"><i class="ti ti-arrow-left"></i> Quay lại</a>
+
+<div class="ff-form-card">
+  <div class="ff-card-header"><h5><i class="ti ti-map-pin-cog"></i> Chỉnh sửa</h5></div>
+  <div class="ff-card-body">
+    <form asp-action="EditStadium" method="post">
+      <input type="hidden" asp-for="StadiumId" />
+      <input type="hidden" asp-for="CreatedAt" />
+      <input type="hidden" asp-for="OwnerId" />
+      <div class="ff-form-group"><label asp-for="StadiumName">Tên Sân</label><input asp-for="StadiumName" required /></div>
+      <div class="ff-form-group"><label asp-for="Address">Địa chỉ</label><input asp-for="Address" required /></div>
+      <div class="ff-form-group"><label asp-for="Description">Mô tả</label><textarea asp-for="Description" rows="3"></textarea></div>
+      <div style="display:flex;gap:10px;padding-top:8px;">
+        <button type="submit" class="ff-btn ff-btn-warning ff-btn-lg"><i class="ti ti-check"></i> Cập nhật</button>
+        <a href="@Url.Action("Stadiums", "Admin")" class="ff-btn ff-btn-outline ff-btn-lg">Hủy</a>
+      </div>
+    </form>
+  </div>
+</div>

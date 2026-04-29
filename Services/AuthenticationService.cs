@@ -31,6 +31,7 @@ namespace FindFootballOppsite.Services
                 return null;
 
             var user = await _context.Users
+                .Include(u => u.Roles)
                 .FirstOrDefaultAsync(u => u.Username == username);
 
             if (user == null)
@@ -43,8 +44,7 @@ namespace FindFootballOppsite.Services
             if (role == null)
                 return null;
 
-            var userHasRole = await _context.UserRoles
-                .AnyAsync(ur => ur.UserID == user.UserID && ur.RoleID == role.RoleID);
+            var userHasRole = user.Roles.Any(r => r.RoleName == roleName);
 
             if (!userHasRole)
                 return null;
@@ -82,17 +82,13 @@ namespace FindFootballOppsite.Services
             };
 
             _context.Users.Add(user);
-            await _context.SaveChangesAsync(); // To get the generated UserID
+            await _context.SaveChangesAsync(); // To get the generated UserId
 
             // Assign Role
             var role = await _context.Roles.FirstOrDefaultAsync(r => r.RoleName == roleName);
             if (role != null)
             {
-                _context.UserRoles.Add(new UserRole
-                {
-                    UserID = user.UserID,
-                    RoleID = role.RoleID
-                });
+                user.Roles.Add(role);
                 await _context.SaveChangesAsync();
             }
 

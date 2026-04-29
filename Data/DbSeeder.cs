@@ -44,11 +44,7 @@ namespace FindFootballOppsite.Data
                 var role = context.Roles.FirstOrDefault(r => r.RoleName == roleName);
                 if (role != null)
                 {
-                    context.UserRoles.Add(new UserRole
-                    {
-                        UserID = user.UserID,
-                        RoleID = role.RoleID
-                    });
+                    user.Roles.Add(role);
                     context.SaveChanges();
                 }
             }

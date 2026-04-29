@@ -1,0 +1,108 @@
+@model IEnumerable<FindFootballOppsite.Models.Team>
+@{
+    ViewData["Title"] = "Quản lý Đội bóng";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    var currentPage = (int)(ViewBag.CurrentPage ?? 1);
+    var totalPages = (int)(ViewBag.TotalPages ?? 1);
+    var totalItems = (int)(ViewBag.TotalItems ?? 0);
+    var search = ViewBag.Search as string ?? "";
+}
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="ff-toast"><i class="ti ti-circle-check"></i> @TempData["SuccessMessage"]</div>
+}
+
+<div class="ff-dashboard-hero ff-animate-in" style="background:linear-gradient(135deg,#059669,#0891b2);">
+  <h2><i class="ti ti-shield"></i> Quản Lý Đội Bóng</h2>
+  <p>Thêm, sửa, xóa và giám sát các đội bóng trong hệ thống.</p>
+</div>
+
+<div class="ff-toolbar ff-animate-in">
+  <form method="get" asp-action="Teams" class="ff-search-box">
+    <i class="ti ti-search ff-search-icon"></i>
+    <input type="text" name="search" value="@search" placeholder="Tìm theo tên đội hoặc trình độ..." />
+  </form>
+  <div class="ff-toolbar-actions">
+    <span class="ff-badge ff-badge-success ff-badge-pill">@totalItems đội bóng</span>
+    <a href="@Url.Action("CreateTeam", "Admin")" class="ff-btn ff-btn-success"><i class="ti ti-plus"></i> Thêm mới</a>
+  </div>
+</div>
+
+<div class="ff-card ff-animate-in" style="height:auto;">
+  <div class="ff-card-body" style="padding:0;">
+    @if (Model.Any())
+    {
+      <div class="table-responsive">
+        <table class="ff-table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Tên đội</th>
+              <th>Đội trưởng</th>
+              <th>Trình độ</th>
+              <th>Trạng thái</th>
+              <th>Ngày tạo</th>
+              <th style="text-align:right;">Thao tác</th>
+            </tr>
+          </thead>
+          <tbody>
+            @foreach (var team in Model)
+            {
+              <tr>
+                <td><span class="ff-badge ff-badge-success">#@team.TeamId</span></td>
+                <td>
+                  <div style="display:flex;align-items:center;gap:10px;">
+                    <div style="width:36px;height:36px;border-radius:12px;background:linear-gradient(135deg,#059669,#0891b2);display:flex;align-items:center;justify-content:center;color:#fff;font-size:1rem;flex-shrink:0;">
+                      <i class="ti ti-shield"></i>
+                    </div>
+                    <span style="font-weight:600;">@team.TeamName</span>
+                  </div>
+                </td>
+                <td>@(team.Captain != null ? team.Captain.FullName : (team.CaptainId.HasValue ? $"ID: {team.CaptainId}" : "—"))</td>
+                <td><span class="ff-badge ff-badge-purple ff-badge-pill">@(team.QualityLevel ?? "—")</span></td>
+                <td>
+                  @if (team.IsDisbanded == true)
+                  {
+                    <span class="ff-badge ff-badge-danger ff-badge-pill">Đã giải tán</span>
+                  }
+                  else
+                  {
+                    <span class="ff-badge ff-badge-success ff-badge-pill"><span class="ff-live-dot" style="width:6px;height:6px;margin-right:3px;"></span> Hoạt động</span>
+                  }
+                </td>
+                <td style="font-size:0.82rem;color:var(--ff-text-muted);">@(team.CreatedAt?.ToString("dd/MM/yyyy") ?? "—")</td>
+                <td style="text-align:right;">
+                  <div style="display:flex;gap:6px;justify-content:flex-end;">
+                    <a href="@Url.Action("EditTeam", "Admin", new { id = team.TeamId })" class="ff-btn ff-btn-warning ff-btn-sm" title="Sửa"><i class="ti ti-edit"></i></a>
+                    <a href="@Url.Action("DeleteTeam", "Admin", new { id = team.TeamId })" class="ff-btn ff-btn-danger ff-btn-sm" title="Xóa" onclick="return confirm('Bạn có chắc chắn muốn xóa đội bóng này?');"><i class="ti ti-trash"></i></a>
+                  </div>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+
+      @if (totalPages > 1)
+      {
+        <div class="ff-pagination" style="padding:12px 20px;">
+          <div class="ff-pagination-info">Trang @currentPage / @totalPages · @totalItems kết quả</div>
+          <div class="ff-pagination-pages">
+            <a href="@Url.Action("Teams", "Admin", new { search, page = currentPage - 1 })" class="@(currentPage <= 1 ? "disabled" : "")"><i class="ti ti-chevron-left"></i></a>
+            @for (int i = 1; i <= totalPages; i++)
+            {
+              if (i == currentPage) { <span class="active">@i</span> }
+              else { <a href="@Url.Action("Teams", "Admin", new { search, page = i })">@i</a> }
+            }
+            <a href="@Url.Action("Teams", "Admin", new { search, page = currentPage + 1 })" class="@(currentPage >= totalPages ? "disabled" : "")"><i class="ti ti-chevron-right"></i></a>
+          </div>
+        </div>
+      }
+    }
+    else
+    {
+      <div class="ff-empty-state"><i class="ti ti-shield-off"></i><p>Không tìm thấy đội bóng nào</p></div>
+    }
+  </div>
+</div>

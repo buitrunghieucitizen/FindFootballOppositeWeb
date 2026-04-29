@@ -1,0 +1,67 @@
+@model FindFootballOppsite.Models.Stadium
+@{
+    ViewData["Title"] = "Chi tiết Sân bóng";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="ff-dashboard-hero ff-animate-in" style="background:linear-gradient(135deg,#d97706,#dc2626);">
+  <h2><i class="ti ti-building-stadium"></i> @Model.StadiumName</h2>
+  <p>Chi tiết cụm sân bóng #@Model.StadiumId</p>
+</div>
+
+<a href="@Url.Action("Stadiums", "Admin")" class="ff-btn ff-btn-outline mb-3"><i class="ti ti-arrow-left"></i> Quay lại</a>
+
+<div class="ff-card ff-animate-in" style="height:auto;max-width:700px;">
+  <div class="ff-card-header"><h5><i class="ti ti-info-circle"></i> Thông tin chi tiết</h5></div>
+  <div class="ff-card-body">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
+      <div>
+        <div style="font-size:0.72rem;text-transform:uppercase;letter-spacing:0.5px;color:var(--ff-text-muted);margin-bottom:4px;">Tên sân</div>
+        <div style="font-weight:700;font-size:1.05rem;">@Model.StadiumName</div>
+      </div>
+      <div>
+        <div style="font-size:0.72rem;text-transform:uppercase;letter-spacing:0.5px;color:var(--ff-text-muted);margin-bottom:4px;">ID</div>
+        <div><span class="ff-badge ff-badge-warning">#@Model.StadiumId</span></div>
+      </div>
+      <div>
+        <div style="font-size:0.72rem;text-transform:uppercase;letter-spacing:0.5px;color:var(--ff-text-muted);margin-bottom:4px;">Chủ sân</div>
+        <div style="font-weight:600;">@(Model.Owner?.FullName ?? (Model.OwnerId.HasValue ? $"ID: {Model.OwnerId}" : "—"))</div>
+      </div>
+      <div>
+        <div style="font-size:0.72rem;text-transform:uppercase;letter-spacing:0.5px;color:var(--ff-text-muted);margin-bottom:4px;">Ngày tạo</div>
+        <div>@(Model.CreatedAt?.ToString("dd/MM/yyyy HH:mm") ?? "—")</div>
+      </div>
+      <div style="grid-column:span 2;">
+        <div style="font-size:0.72rem;text-transform:uppercase;letter-spacing:0.5px;color:var(--ff-text-muted);margin-bottom:4px;">Địa chỉ</div>
+        <div><i class="ti ti-map-pin" style="color:var(--ff-warning);"></i> @Model.Address</div>
+      </div>
+      <div style="grid-column:span 2;">
+        <div style="font-size:0.72rem;text-transform:uppercase;letter-spacing:0.5px;color:var(--ff-text-muted);margin-bottom:4px;">Mô tả</div>
+        <div style="color:var(--ff-text-muted);font-size:0.88rem;">@(Model.Description ?? "Chưa có mô tả")</div>
+      </div>
+    </div>
+
+    @if (Model.Pitches != null && Model.Pitches.Any())
+    {
+      <h6 style="margin-top:24px;font-size:0.78rem;text-transform:uppercase;letter-spacing:0.5px;color:var(--ff-text-muted);margin-bottom:12px;">Sân con (@Model.Pitches.Count)</h6>
+      <div class="row g-3">
+        @foreach (var pitch in Model.Pitches)
+        {
+          <div class="col-md-4">
+            <div class="ff-pitch-card">
+              <div class="pitch-icon"><i class="ti ti-soccer-field"></i></div>
+              <div class="pitch-name">@pitch.PitchName</div>
+              <div class="pitch-type">Sân @pitch.PitchSize người</div>
+              <div class="pitch-price">@pitch.PricePerHour.ToString("N0") VNĐ/giờ</div>
+            </div>
+          </div>
+        }
+      </div>
+    }
+
+    <div style="margin-top:24px;display:flex;gap:10px;">
+      <a href="@Url.Action("EditStadium", "Admin", new { id = Model.StadiumId })" class="ff-btn ff-btn-warning"><i class="ti ti-edit"></i> Sửa</a>
+      <a href="@Url.Action("Stadiums", "Admin")" class="ff-btn ff-btn-outline">Quay lại danh sách</a>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,41 @@
+@model FindFootballOppsite.Models.User
+@{
+    ViewData["Title"] = "Thêm Người dùng";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="ff-dashboard-hero ff-animate-in">
+  <h2><i class="ti ti-user-plus"></i> Thêm Người Dùng Mới</h2>
+  <p>Tạo tài khoản mới trên hệ thống FindFootball.</p>
+</div>
+
+<a href="@Url.Action("Users", "Admin")" class="ff-btn ff-btn-outline mb-3 ff-animate-in"><i class="ti ti-arrow-left"></i> Quay lại danh sách</a>
+
+<div class="ff-form-card ff-animate-in">
+  <div class="ff-card-header"><h5><i class="ti ti-user-plus"></i> Thông tin người dùng</h5></div>
+  <div class="ff-card-body">
+    <form asp-action="CreateUser" method="post">
+      <div class="ff-form-group">
+        <label asp-for="Username">Tên đăng nhập <span style="color:var(--ff-danger);">*</span></label>
+        <input asp-for="Username" placeholder="Nhập tên đăng nhập..." required />
+        <span asp-validation-for="Username" style="font-size:0.78rem;color:var(--ff-danger);"></span>
+      </div>
+      <div class="ff-form-group">
+        <label asp-for="PasswordHash">Mật khẩu <span style="color:var(--ff-danger);">*</span></label>
+        <input asp-for="PasswordHash" type="password" placeholder="Tối thiểu 8 ký tự..." required />
+      </div>
+      <div class="ff-form-group">
+        <label asp-for="FullName">Họ và Tên <span style="color:var(--ff-danger);">*</span></label>
+        <input asp-for="FullName" placeholder="Nhập họ và tên..." required />
+      </div>
+      <div class="ff-form-group">
+        <label asp-for="Phone">Số điện thoại</label>
+        <input asp-for="Phone" placeholder="0987654321" />
+      </div>
+      <div style="display:flex;gap:10px;padding-top:8px;">
+        <button type="submit" class="ff-btn ff-btn-primary ff-btn-lg"><i class="ti ti-check"></i> Lưu người dùng</button>
+        <a href="@Url.Action("Users", "Admin")" class="ff-btn ff-btn-outline ff-btn-lg">Hủy</a>
+      </div>
+    </form>
+  </div>
+</div>

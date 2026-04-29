@@ -35,9 +35,8 @@ using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
     var context = services.GetRequiredService<ApplicationDbContext>();
-    // Make sure the database is created
-    context.Database.EnsureCreated();
-    // Seed initial users for testing
+    // Database is managed by Database/FindFootballOpWeb_Database.sql
+    // Only seed test users with BCrypt hashed passwords
     DbSeeder.Seed(context);
 }
 

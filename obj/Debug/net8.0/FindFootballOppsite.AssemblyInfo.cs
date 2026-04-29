@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("FindFootballOppsite")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+99a2a47bc3253f830b872dd0c03accbe67e32073")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+7ccb1c0a988aefe748133542bc3d10c8e9e6ae2a")]
 [assembly: System.Reflection.AssemblyProductAttribute("FindFootballOppsite")]
 [assembly: System.Reflection.AssemblyTitleAttribute("FindFootballOppsite")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
